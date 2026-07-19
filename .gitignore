@@ -1,0 +1,41 @@
+# === عمومی لاراول ===
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.env.secure
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+
+# === IDE و ابزارها ===
+/.fleet
+/.idea
+/.vscode
+/.cursor
+/.agents
+
+# === لاگ‌ها و فایل‌های موقت ===
+*.log
+
+# === فایل‌های پروژه‌ی تو که نباید روی گیت برن ===
+composer.phar
+composer-audit.json
+AUDIT_REPORT.md
+tahlil.txt
+list_users.php
+route_check_output.txt
+test_output.txt
+routes_list.json
+csp-backup.txt
+dashboard_dump.html
+truncate()

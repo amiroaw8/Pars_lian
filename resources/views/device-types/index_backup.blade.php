@@ -1,0 +1,1 @@
+@include('device-types.index_backup')

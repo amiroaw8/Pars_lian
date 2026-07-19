@@ -1,0 +1,7 @@
+﻿@import './partials/components.css';
+@import './partials/animations.css';
+@import './partials/scrollbars.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

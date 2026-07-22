@@ -14,13 +14,11 @@
         z-index: 9999;
         background: radial-gradient(ellipse at 50% 40%, #1e3a5f 0%, #0f172a 55%, #020617 100%);
         transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-                    visibility 0.55s cubic-bezier(0.4, 0, 0.2, 1),
                     transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .page-loader.hide {
         opacity: 0;
-        visibility: hidden;
         transform: scale(1.04);
         pointer-events: none;
     }

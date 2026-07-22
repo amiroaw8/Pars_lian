@@ -19,8 +19,11 @@
     <meta name="apple-mobile-web-app-title" content="ParsLian">
 
     <!-- Fonts & Icons -->
-    <link href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" rel="stylesheet">
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
+    
+    <link rel="preload" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}"></noscript>
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
     <!-- Favicon -->
@@ -168,7 +171,7 @@
         align-items: center;
         gap: 0.75rem;
         padding: 0.75rem 1rem;
-        color: rgba(255,255,255,0.9);
+        color: #ffffff; /* Increased contrast for navigation links */
         text-decoration: none;
         border-radius: 0.75rem;
         font-size: 0.9rem;
@@ -177,7 +180,7 @@
     }
 
     .nav-link-modern:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.2); /* Higher hover contrast */
         color: white;
     }
 
@@ -513,7 +516,7 @@
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
         <!-- Sidebar Navigation -->
-        <aside class="admin-sidebar" id="adminSidebar">
+        <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Admin Sidebar">
             @include('layouts.partials.admin-sidebar-menu')
         </aside>
 

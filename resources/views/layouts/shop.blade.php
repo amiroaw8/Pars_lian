@@ -441,12 +441,13 @@
     }
 
     @keyframes progress {
-        from { width: 100%; }
-        to { width: 0%; }
+        from { transform: scaleX(1); }
+        to { transform: scaleX(0); }
     }
 
     .animate-progress {
         animation: progress linear forwards;
+        transform-origin: left;
     }
 
     /* Magnetic effect enhancements */
@@ -821,6 +822,7 @@
 
     <!-- Main Shop Header & Navigation -->
     <header class="sticky top-0 z-50 transition-all duration-500" id="main-shop-header">
+        <h1 class="sr-only">فروشگاه پارس لیان</h1>
         <!-- Unified Header: Logo, Search, Nav & Actions -->
         <div class="bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-lg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -835,16 +837,19 @@
 
                     <!-- Search Bar Section -->
                     <div class="flex-1 max-w-2xl">
-                        <form action="{{ route('catalog.index') }}" method="GET" class="relative group">
+                        <form action="{{ route('catalog.index') }}" method="GET" class="relative group" role="search" aria-label="جستجوی محصولات">
+                            <label for="search-input" class="sr-only">جستجو در محصولات</label>
                             <div class="relative">
                                 <input type="text" name="q" placeholder="جستجو در محصولات، برندها و..."
-                                       class="w-full pl-12 pr-12 py-3 bg-gray-100/50 backdrop-blur-sm border-2 border-transparent rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 focus:bg-white transition-all duration-300 text-gray-700 placeholder-gray-400 shadow-inner hover:bg-gray-100"
+                                       class="w-full pl-14 pr-14 py-4 bg-gray-100/50 backdrop-blur-sm border-2 border-transparent rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 focus:bg-white transition-all duration-300 text-gray-700 placeholder-gray-400 shadow-inner hover:bg-gray-100 min-h-[48px]"
                                        value="{{ request('q') }}"
-                                       id="search-input">
-                                <button type="submit" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-500 transition-colors group-hover:scale-110">
+                                       id="search-input"
+                                       aria-label="جستجو در محصولات"
+                                       title="جستجو در محصولات">
+                                <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-xl text-gray-400 hover:text-blue-500 transition-colors group-hover:scale-110" aria-label="جستجو">
                                     <i class="ti ti-search text-xl"></i>
                                 </button>
-                                <button type="button" onclick="startVoiceSearch()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-500 transition-colors" id="voice-btn">
+                                <button type="button" onclick="startVoiceSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-xl text-gray-400 hover:text-green-500 transition-colors" id="voice-btn" aria-label="جستجوی صوتی" title="جستجوی صوتی">
                                     <i class="ti ti-microphone text-xl"></i>
                                 </button>
                             </div>
@@ -865,13 +870,13 @@
                     <!-- User Actions Section -->
                     <div class="flex items-center space-x-2 rtl:space-x-reverse flex-shrink-0">
                         <!-- Compare -->
-                        <button onclick="showCompareModal()" class="w-11 h-11 bg-white hover:bg-purple-50 text-gray-600 hover:text-purple-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative group">
+                        <button onclick="showCompareModal()" class="w-12 h-12 min-h-[48px] min-w-[48px] bg-white hover:bg-purple-50 text-gray-600 hover:text-purple-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative group" aria-label="مقایسه محصولات">
                             <i class="ti ti-git-compare text-xl"></i>
                             <span class="compare-count absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white hidden" id="compare-count">0</span>
                         </button>
 
                         <!-- Wishlist -->
-                        <button onclick="showWishlistModal()" class="w-11 h-11 bg-white hover:bg-red-50 text-gray-600 hover:text-red-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative group">
+                        <button onclick="showWishlistModal()" class="w-12 h-12 min-h-[48px] min-w-[48px] bg-white hover:bg-red-50 text-gray-600 hover:text-red-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative group" aria-label="لیست علاقه‌مندی‌ها">
                             <i class="ti ti-heart text-xl"></i>
                             <span class="wishlist-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white hidden" id="wishlist-count">0</span>
                         </button>
@@ -889,7 +894,7 @@
                                     <!-- Content will be loaded via AJAX -->
                                     <div class="p-8 text-center">
                                         <i class="ti ti-loader-2 animate-spin text-3xl text-blue-500 mb-2"></i>
-                                        <p class="text-sm text-gray-500">در حال بارگذاری...</p>
+                                        <p class="text-sm text-gray-700">در حال بارگذاری...</p>
                                     </div>
                                 </div>
                             </div>
@@ -958,7 +963,7 @@
                                 <a href="{{ route('login') }}" class="px-5 py-2.5 text-gray-700 hover:text-blue-600 font-medium transition-colors">ورود</a>
                                 <a href="{{ route('register') }}" class="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-md hover:shadow-lg">ثبت نام</a>
                             </div>
-                            <a href="{{ route('login') }}" class="lg:hidden w-11 h-11 bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-md">
+                            <a href="{{ route('login') }}" class="lg:hidden w-12 h-12 min-h-[48px] min-w-[48px] bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-md" aria-label="ورود به حساب کاربری">
                                 <i class="ti ti-user text-xl"></i>
                             </a>
                         @else
@@ -1060,7 +1065,7 @@
                             <i class="ti ti-layout-grid ml-1 sm:ml-1.5 text-base sm:text-lg"></i>
                             <span>محصولات</span>
                         </a>
-                        <a href="{{ route('catalog.index', ['on_sale' => 1]) }}" class="flex items-center text-xs sm:text-sm font-bold text-red-500 hover:text-red-600 transition-colors py-1">
+                        <a href="{{ route('catalog.index', ['on_sale' => 1]) }}" class="flex items-center text-xs sm:text-sm font-bold text-red-700 hover:text-red-800 transition-colors py-1">
                             <i class="ti ti-discount ml-1 sm:ml-1.5 text-base sm:text-lg"></i>
                             <span>تخفیف‌ها</span>
                         </a>
@@ -1815,7 +1820,7 @@ class ParticleSystem {
     constructor() {
         this.container = document.querySelector('.particles-container');
         this.particles = [];
-        this.maxParticles = 50;
+        this.maxParticles = 15;
         this.init();
     }
 

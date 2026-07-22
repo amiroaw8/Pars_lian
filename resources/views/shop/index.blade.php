@@ -119,7 +119,7 @@
                             <i class="ti ti-cpu text-3xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-black text-slate-900">تعمیرات تخصصی</h3>
+                            <h2 class="text-xl font-black text-slate-900">تعمیرات تخصصی</h2>
                             <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">با پیشرفته‌ترین تجهیزات روز دنیا</p>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                             <i class="ti ti-components text-3xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-black text-slate-900">قطعات اورجینال</h3>
+                            <h2 class="text-xl font-black text-slate-900">قطعات اورجینال</h2>
                             <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">تضمین ۱۰۰٪ اصالت و کیفیت</p>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                             <i class="ti ti-rocket text-3xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-black text-slate-900">تحویل اکسپرس</h3>
+                            <h2 class="text-xl font-black text-slate-900">تحویل اکسپرس</h2>
                             <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">ارسال فوری در کمترین زمان</p>
                         </div>
                     </div>
@@ -170,12 +170,13 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        @forelse($featuredProducts as $product)
                             <div class="group bg-white rounded-[2.5rem] border border-slate-100 p-4 hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500 animate-slide-up"
-                                style="animation-delay: <?php        echo $loop->index * 0.1; ?>s">
+                                style="--delay: {{ $loop->index * 0.1 }}s; animation-delay: var(--delay);">
                                 <div class="relative overflow-hidden rounded-[2rem] pt-[100%] bg-slate-50">
                                     <img loading="lazy" src="{{ $product->main_image_url }}" alt="{{ $product->name }}"
-                                         onerror="this.onerror=null;this.src='{{ asset('images/no-image.svg') }}';"
+                                         data-fallback="{{ asset('images/no-image.svg') }}"
+                                         onerror="this.onerror=null;this.src=this.dataset.fallback"
                                         class="absolute inset-0 z-[1] w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-700">
 
                                     @if($product->is_on_sale)
@@ -185,48 +186,43 @@
                                         </div>
                                     @endif
 
+                                    <!-- Quick actions overlay -->
                                     <div
-                                        class="absolute inset-0 bg-blue-900/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4 z-20">
-                                        <button type="button"
-                                            class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-slate-900 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all delay-75 btn-add-to-cart"
-                                            data-product-slug="{{ $product->slug }}">
-                                            <i class="ti ti-shopping-cart text-2xl"></i>
-                                        </button>
-                                        <a href="{{ route('shop.show', $product) }}"
-                                            class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-slate-900 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all delay-150">
-                                            <i class="ti ti-eye text-2xl"></i>
+                                        class="absolute inset-x-4 bottom-4 z-10 flex items-center justify-center gap-2 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                        <a href="{{ route('catalog.show', $product->slug) }}"
+                                            class="w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-md text-slate-700 hover:bg-blue-600 hover:text-white flex items-center justify-center shadow-lg transition-all"
+                                            title="مشاهده جزئیات">
+                                            <i class="ti ti-eye text-xl"></i>
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="p-6">
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <span
-                                            class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                            {{ $product->category->name ?? 'سخت‌افزار' }}
-
-                                        </span>
+                                <div class="p-4">
+                                    <div class="text-[10px] font-bold text-slate-400 mb-1">
+                                        {{ $product->category->name ?? 'عمومی' }}
                                     </div>
-                                    <h3
-                                        class="font-black text-slate-900 mb-3 line-clamp-2 min-h-[3rem] leading-snug group-hover:text-blue-600 transition-colors">
-                                        <a href="{{ route('shop.show', $product) }}">{{ $product->name }}</a>
+                                    <h3 class="font-black text-slate-800 text-base mb-3 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                                        <a href="{{ route('catalog.show', $product->slug) }}">
+                                            {{ $product->name }}
+                                        </a>
                                     </h3>
-                                    <div class="flex justify-between items-center mt-6 pt-4 border-t border-slate-50">
-                                        <div class="flex flex-col">
+
+                                    <div class="flex items-center justify-between">
+                                        <div>
                                             @if($product->is_on_sale)
-                                                <span
-                                                    class="text-xs text-slate-400 line-through mb-0.5">{{ number_format($product->price) }}</span>
-                                                <span
-                                                    class="text-xl font-black text-blue-600 tracking-tight">{{ number_format($product->sale_price) }}
-
-                                                    <small class="text-xs font-bold text-slate-400 mr-1">تومان</small></span>
+                                                <div class="text-xs font-bold text-slate-400 line-through">
+                                                    {{ number_format($product->price) }}
+                                                </div>
+                                                <div class="text-lg font-black text-rose-600">
+                                                    {{ number_format($product->sale_price) }} <span class="text-xs font-bold">تومان</span>
+                                                </div>
                                             @else
-                                                <span
-                                                    class="text-xl font-black text-slate-900 tracking-tight">{{ number_format($product->price) }}
-
-                                                    <small class="text-xs font-bold text-slate-400 mr-1">تومان</small></span>
+                                                <div class="text-lg font-black text-slate-900">
+                                                    {{ number_format($product->price) }} <span class="text-xs font-bold">تومان</span>
+                                                </div>
                                             @endif
                                         </div>
+
                                         <button type="button"
                                             class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all btn-add-to-cart"
                                             data-product-slug="{{ $product->slug }}">
@@ -235,7 +231,11 @@
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        @empty
+                            <div class="col-span-full py-12 text-center text-slate-400">
+                                محتوایی جهت نمایش موجود نیست.
+                            </div>
+                        @endforelse
                     </div>
                 </section>
             @endif
@@ -263,7 +263,7 @@
                                         <i class="ti ti-certificate text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-slate-900 mb-1">اصالت تضمین شده</h4>
+                                        <h3 class="font-black text-slate-900 mb-1">اصالت تضمین شده</h3>
                                         <p class="text-sm text-slate-500">تمامی قطعات با سریال اصلی و گارانتی معتبر ارائه
                                             می‌شوند.</p>
                                     </div>
@@ -274,7 +274,7 @@
                                         <i class="ti ti-tools text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-slate-900 mb-1">تیم فنی مجرب</h4>
+                                        <h3 class="font-black text-slate-900 mb-1">تیم فنی مجرب</h3>
                                         <p class="text-sm text-slate-500">بهره‌مندی از دانش بهترین تکنسین‌های سخت‌افزار
                                             ایران.</p>
                                     </div>
@@ -285,7 +285,7 @@
                                         <i class="ti ti-truck text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-slate-900 mb-1">ارسال ایمن و سریع</h4>
+                                        <h3 class="font-black text-slate-900 mb-1">ارسال ایمن و سریع</h3>
                                         <p class="text-sm text-slate-500">بسته‌بندی تخصصی و ضدضربه برای تمامی قطعات حساس.
                                         </p>
                                     </div>
@@ -296,7 +296,7 @@
                                         <i class="ti ti-headset text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-black text-slate-900 mb-1">پشتیبانی دائمی</h4>
+                                        <h3 class="font-black text-slate-900 mb-1">پشتیبانی دائمی</h3>
                                         <p class="text-sm text-slate-500">همراهی شما از لحظه خرید تا نصب و راه‌اندازی قطعه.
                                         </p>
                                     </div>
@@ -318,8 +318,8 @@
                                             <i class="ti ti-shield-check text-3xl"></i>
                                         </div>
                                         <div>
-                                            <h4 class="text-xl font-black text-slate-900">اعتماد شما، سرمایه ماست</h4>
-                                            <p class="text-sm text-blue-600 font-bold">+۲۵ سال سابقه درخشان</p>
+                                            <h3 class="text-xl font-black text-slate-900">اعتماد شما، سرمایه ماست</h3>
+                                            <p class="text-sm text-blue-700 font-bold">+۲۵ سال سابقه درخشان</p>
                                         </div>
                                     </div>
                                     <blockquote class="text-slate-600 leading-relaxed italic text-lg mb-8">
@@ -333,7 +333,7 @@
                                         </div>
                                         <div>
                                             <p class="font-black text-slate-900">مدیریت پارس لیان</p>
-                                            <p class="text-xs text-slate-400 uppercase tracking-widest">Pars Lian Group</p>
+                                            <p class="text-xs text-slate-600 uppercase tracking-widest">Pars Lian Group</p>
                                         </div>
                                     </div>
                                 </div>
@@ -362,7 +362,7 @@
                             class="w-24 h-24 bg-blue-50 text-blue-600 rounded-[2rem] flex items-center justify-center mx-auto mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 group-hover:-translate-y-2 shadow-sm border border-blue-100">
                             <i class="ti ti-certificate text-4xl"></i>
                         </div>
-                        <h4 class="text-xl font-black text-slate-900 mb-3">ضمانت ۱۰۰٪ اصالت</h4>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">ضمانت ۱۰۰٪ اصالت</h3>
                         <p class="text-sm text-slate-500 leading-relaxed px-4">تمامی قطعات ارائه شده با تضمین اصالت و سلامت
                             کامل فیزیکی عرضه می‌شوند.</p>
                     </div>
@@ -371,7 +371,7 @@
                             class="w-24 h-24 bg-indigo-50 text-indigo-600 rounded-[2rem] flex items-center justify-center mx-auto mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 group-hover:-translate-y-2 shadow-sm border border-indigo-100">
                             <i class="ti ti-headset text-4xl"></i>
                         </div>
-                        <h4 class="text-xl font-black text-slate-900 mb-3">پشتیبانی تخصصی</h4>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">پشتیبانی تخصصی</h3>
                         <p class="text-sm text-slate-500 leading-relaxed px-4">مشاوره رایگان پیش از خرید توسط کارشناسان مجرب
                             سخت‌افزار پارس لیان.</p>
                     </div>
@@ -380,7 +380,7 @@
                             class="w-24 h-24 bg-emerald-50 text-emerald-600 rounded-[2rem] flex items-center justify-center mx-auto mb-8 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500 group-hover:-translate-y-2 shadow-sm border border-emerald-100">
                             <i class="ti ti-shield-check text-4xl"></i>
                         </div>
-                        <h4 class="text-xl font-black text-slate-900 mb-3">گارانتی معتبر</h4>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">گارانتی معتبر</h3>
                         <p class="text-sm text-slate-500 leading-relaxed px-4">ارائه خدمات پس از فروش و گارانتی طلایی برای
                             تمامی محصولات فروشگاه.</p>
                     </div>
@@ -389,7 +389,7 @@
                             class="w-24 h-24 bg-rose-50 text-rose-600 rounded-[2rem] flex items-center justify-center mx-auto mb-8 group-hover:bg-rose-600 group-hover:text-white transition-all duration-500 group-hover:-translate-y-2 shadow-sm border border-rose-100">
                             <i class="ti ti-truck text-4xl"></i>
                         </div>
-                        <h4 class="text-xl font-black text-slate-900 mb-3">ارسال فوق سریع</h4>
+                        <h3 class="text-xl font-black text-slate-900 mb-3">ارسال فوق سریع</h3>
                         <p class="text-sm text-slate-500 leading-relaxed px-4">تحویل در سریع‌ترین زمان ممکن به تمام نقاط
                             کشور با بسته‌بندی ایمن.</p>
                     </div>
@@ -481,7 +481,7 @@
     </style>
 @endsection
 
-<?php $__env->startPush('scripts'); ?>
+@push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Sort select logic
@@ -493,4 +493,4 @@
             }
         });
     </script>
-<?php $__env->stopPush(); ?>
+@endpush

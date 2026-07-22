@@ -72,7 +72,7 @@
                 <i class="ti ti-users text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">کل کاربران</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">کل کاربران</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['total_users'] ?? 0 }}</div>
             </div>
         </div>
@@ -84,7 +84,7 @@
                 <i class="ti ti-user-check text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">کاربران فعال</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">کاربران فعال</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['active_users'] ?? 0 }}</div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                 <i class="ti ti-clipboard-list text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">کل سفارشات</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">کل سفارشات</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['total_orders'] ?? 0 }}</div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                 <i class="ti ti-tool text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">سفارشات تعمیر</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">سفارشات تعمیر</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['repair_orders'] ?? 0 }}</div>
             </div>
         </div>
@@ -120,7 +120,7 @@
                 <i class="ti ti-shopping-cart text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">سفارشات فروش</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">سفارشات فروش</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['sales_orders'] ?? 0 }}</div>
             </div>
         </div>
@@ -132,7 +132,7 @@
                 <i class="ti ti-clock text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">در حال انجام</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">در حال انجام</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['pending_orders'] ?? 0 }}</div>
             </div>
         </div>
@@ -144,7 +144,7 @@
                 <i class="ti ti-check-circle text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">تکمیل شده</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">تکمیل شده</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800">{{ $stats['completed_orders'] ?? 0 }}</div>
             </div>
         </div>
@@ -156,7 +156,7 @@
                 <i class="ti ti-paperclip text-lg sm:text-xl"></i>
             </div>
             <div class="min-w-0 flex-1">
-                <div class="text-xs font-medium text-slate-500 mb-0.5 truncate">فایل‌ها</div>
+                <div class="text-xs font-semibold text-slate-700 mb-0.5 truncate">فایل‌ها</div>
                 <div class="text-lg sm:text-xl font-black text-slate-800 leading-tight">{{ $stats['total_attachments'] ?? 0 }}</div>
             </div>
         </div>
@@ -196,7 +196,7 @@
                 <div class="flex h-4 w-full rounded-full overflow-hidden bg-slate-100 mb-8">
                     @foreach($userRoles as $role => $count)
                         @php $percent = ($count / $totalRoles) * 100; @endphp
-                        <div class="{{ $roleColors[$role] ?? 'bg-slate-400' }} h-full" style="width: <?php echo $percent; ?>%;" title="{{ $roleNames[$role] ?? $role }}: {{ $count }}"></div>
+                        <div class="{{ $roleColors[$role] ?? 'bg-slate-400' }} h-full" style="--role-width: {{ number_format($percent, 2, '.', '') }}%; width: var(--role-width);" title="{{ $roleNames[$role] ?? $role }}: {{ $count }}"></div>
                     @endforeach
                 </div>
 
@@ -237,7 +237,7 @@
                             <span class="text-[11px] font-black text-slate-800">{{ $data['count'] }} ({{ round($percent) }}%)</span>
                         </div>
                         <div class="overflow-hidden h-2 text-xs flex rounded-full bg-slate-100">
-                            <div style="width: <?php echo $percent; ?>%;" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center {{ $data['color'] }} transition-all duration-1000"></div>
+                            <div style="--bar-width: {{ number_format($percent, 2, '.', '') }}%; width: var(--bar-width);" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center {{ $data['color'] }} transition-all duration-1000"></div>
                         </div>
                     </div>
                 @empty
@@ -272,7 +272,7 @@
                         <div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] py-0.5 px-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                             {{ $val }}
                         </div>
-                        <div class="w-full max-w-[8px] rounded-t-full transition-all duration-500 {{ $isCurrentMonth ? 'bg-primary-500 shadow-lg shadow-primary-200' : 'bg-slate-200 group-hover:bg-primary-300' }}" style="height: <?php echo max(5, $height); ?>%;"></div>
+                        <div class="w-full max-w-[8px] rounded-t-full transition-all duration-500 {{ $isCurrentMonth ? 'bg-primary-500 shadow-lg shadow-primary-200' : 'bg-slate-200 group-hover:bg-primary-300' }}" style="--bar-height: {{ number_format(max(5, $height), 2, '.', '') }}%; height: var(--bar-height);"></div>
                     </div>
                     <div class="text-[8px] font-bold {{ $isCurrentMonth ? 'text-primary-600' : 'text-slate-400' }} vertical-text whitespace-nowrap">
                         {{ $months[$month] }}
@@ -304,7 +304,7 @@
                     <div class="flex items-center gap-3">
                         <div class="flex-1 h-1.5 bg-slate-200 rounded-full overflow-hidden">
                             @php $perfPercent = ($perf['completed_count'] / max(1, array_sum(array_column($advancedStats['technician_performance'], 'completed_count')))) * 100; @endphp
-                            <div class="h-full bg-primary-500 rounded-full" style="width: <?php echo $perfPercent; ?>%;"></div>
+                            <div class="h-full bg-primary-500 rounded-full" style="--perf-width: {{ number_format($perfPercent, 2, '.', '') }}%; width: var(--perf-width);"></div>
                         </div>
                         <span class="text-[10px] font-bold text-slate-500">{{ number_format($perf['total_revenue']) }} تومان</span>
                     </div>
@@ -391,7 +391,7 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <i class="ti ti-activity text-primary-600 text-xl"></i>
-            <h3 class="card-title text-slate-800 font-bold">آخرین فعالیت‌های کل سیستم</h3>
+            <h2 class="card-title text-slate-800 font-bold text-lg">آخرین فعالیت‌های کل سیستم</h2>
         </div>
     </x-slot>
     <x-enhanced-table>

@@ -39,3 +39,4 @@ routes_list.json
 csp-backup.txt
 dashboard_dump.html
 truncate()
+resources/views/components/brand-logo.blade.php

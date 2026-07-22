@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="fa">
+<html dir="rtl" lang="fa" data-min-desktop="{{ (int) config('app.desktop_min_width', 1280) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="{{ config('app.viewport') }}" id="viewport-meta">
     <script>
         (function () {
-            var minDesktop = {{ (int) config('app.desktop_min_width', 1280) }};
+            var minDesktop = parseInt(document.documentElement.getAttribute('data-min-desktop') || '1280', 10);
 
             function applyDesktopViewport() {
                 var width = Math.max(minDesktop, window.innerWidth || document.documentElement.clientWidth || screen.width || minDesktop);
@@ -24,15 +24,21 @@
             window.addEventListener('resize', applyDesktopViewport);
         })();
     </script>
+    @stack('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="پارس لیان، فروشگاه تخصصی قطعات و خدمات تعمیرات کامپیوتر با پشتیبانی حرفه‌ای و سفارش‌گذاری سریع">
+    <meta property="og:description" content="پارس لیان، فروشگاه تخصصی قطعات و خدمات تعمیرات کامپیوتر با پشتیبانی حرفه‌ای و سفارش‌گذاری سریع">
     @auth
     <meta name="money-words-url" content="{{ route('automation.money.words') }}">
     @endauth
     <title>@yield('title', 'پارس لیان - سیستم مدیریت خدمات')</title>
 
     <!-- Fonts & Icons -->
-    <link href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" rel="stylesheet">
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
+    
+    <link rel="preload" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}"></noscript>
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
     <!-- Favicon -->
@@ -375,7 +381,7 @@
 
                     <form action="{{ route('logout') }}" method="POST" class="hidden lg:block" onsubmit="return confirm('آیا از خروج مطمئن هستید؟')">
                         @csrf
-                        <button type="submit" class="p-2.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl transition-all" title="خروج از سیستم">
+                        <button type="submit" class="btn-modern w-full py-4 px-8 bg-amber-600 hover:bg-amber-700 text-white-400 rounded-xl transition-all" title="خروج از سیستم">
                             <i class="ti ti-logout-2 text-xl"></i>
                         </button>
                     </form>

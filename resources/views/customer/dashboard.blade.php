@@ -3,6 +3,10 @@
 @section('title', 'پنل کاربری من')
 @section('page_title', 'میز کار کاربری')
 
+@push('meta')
+    <meta name="robots" content="noindex, nofollow">
+@endpush
+
 @section('content')
 <div class="relative">
     <!-- background decorative elements -->
@@ -75,7 +79,7 @@
                             <i class="ti ti-tool text-2xl"></i>
                         </div>
                         <div>
-                            <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">تعمیرات</div>
+                            <div class="text-slate-700 text-xs font-black uppercase tracking-widest mb-1">تعمیرات</div>
                             <div class="text-2xl font-black text-slate-900">{{ $stats['total_repair_orders'] }}</div>
                         </div>
                     </div>
@@ -89,7 +93,7 @@
                             <i class="ti ti-shopping-cart text-2xl"></i>
                         </div>
                         <div>
-                            <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">خریدها</div>
+                            <div class="text-slate-700 text-xs font-black uppercase tracking-widest mb-1">خریدها</div>
                             <div class="text-2xl font-black text-slate-900">{{ $stats['total_shop_orders'] }}</div>
                         </div>
                     </div>
@@ -103,7 +107,7 @@
                             <i class="ti ti-hourglass-low text-2xl"></i>
                         </div>
                         <div>
-                            <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">در جریان</div>
+                            <div class="text-slate-700 text-xs font-black uppercase tracking-widest mb-1">در جریان</div>
                             <div class="text-2xl font-black text-slate-900">{{ $stats['pending_repairs'] }}</div>
                         </div>
                     </div>
@@ -117,7 +121,7 @@
                             <i class="ti ti-receipt text-2xl"></i>
                         </div>
                         <div>
-                            <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">کل پرداختی‌ها</div>
+                            <div class="text-slate-700 text-xs font-black uppercase tracking-widest mb-1">کل پرداختی‌ها</div>
                             <div class="text-xl font-black text-slate-900">
                                 {{ number_format($stats['total_payments']) }}
                                 <small class="text-[10px] font-bold text-slate-400 mr-1">تومان</small>

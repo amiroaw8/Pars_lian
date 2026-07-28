@@ -1,11 +1,5 @@
 # === عمومی لاراول ===
 /.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
 .env
 .env.backup
 .env.production
@@ -39,4 +33,4 @@ routes_list.json
 csp-backup.txt
 dashboard_dump.html
 truncate()
-resources/views/components/brand-logo.blade.php
+

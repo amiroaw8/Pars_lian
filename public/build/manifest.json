@@ -1,0 +1,18 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-BZFJOTca.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/partials/form-enhancements.css": {
+    "file": "assets/form-enhancements-DK7h127G.css",
+    "src": "resources/css/partials/form-enhancements.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D9Cat_84.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

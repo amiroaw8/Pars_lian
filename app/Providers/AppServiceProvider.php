@@ -45,10 +45,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\EloquentServiceOrderRepository::class
         );
 
-        $this->app->bind(
-            \App\Services\Payment\PaymentGatewayInterface::class,
-            \App\Services\Payment\Gateways\ZarinpalGateway::class
-        );
+
     }
 
     /**

@@ -2,32 +2,31 @@
 <html dir="rtl" lang="fa" data-min-desktop="{{ (int) config('app.desktop_min_width', 1280) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="{{ config('app.viewport') }}" id="viewport-meta">
-    <script>
-        (function () {
-            var minDesktop = parseInt(document.documentElement.getAttribute('data-min-desktop') || '1280', 10);
-
-            function applyDesktopViewport() {
-                var width = Math.max(minDesktop, window.innerWidth || document.documentElement.clientWidth || screen.width || minDesktop);
-                var meta = document.getElementById('viewport-meta');
-                if (meta) {
-                    meta.setAttribute('content', 'width=' + width + ', initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
-                }
-                document.documentElement.style.minWidth = width + 'px';
-                if (document.body) {
-                    document.body.style.minWidth = width + 'px';
-                }
-            }
-
-            applyDesktopViewport();
-            document.addEventListener('DOMContentLoaded', applyDesktopViewport);
-            window.addEventListener('resize', applyDesktopViewport);
-        })();
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" id="viewport-meta">
+    <link rel="canonical" href="{{ url()->current() }}" />
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Organization",
+      "name": "فروشگاه پارس لیان",
+      "url": "https://amirwebtest1.ir",
+      "logo": "https://amirwebtest1.ir/logo.png",
+      "description": "فروشگاه تخصصی قطعات کامپیوتر و خدمات تعمیرات",
+      "contactPoint": {
+        "@@type": "ContactPoint",
+        "telephone": "+98-XXX-XXXXXXX",
+        "contactType": "sales"
+      },
+      "sameAs": [
+        "https://www.facebook.com/yourpage",
+        "https://www.instagram.com/yourpage"
+      ]
+    }
     </script>
     @stack('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="پارس لیان، فروشگاه تخصصی قطعات و خدمات تعمیرات کامپیوتر با پشتیبانی حرفه‌ای و سفارش‌گذاری سریع">
-    <meta property="og:description" content="پارس لیان، فروشگاه تخصصی قطعات و خدمات تعمیرات کامپیوتر با پشتیبانی حرفه‌ای و سفارش‌گذاری سریع">
+    <meta name="description" content="فروشگاه پارس لیان با ارائه قطعات اورجینال کامپیوتر، خدمات تعمیرات تخصصی و پشتیبانی حرفه‌ای، بهترین انتخاب برای خرید مطمئن و سریع شماست.">
+    <meta property="og:description" content="فروشگاه پارس لیان با ارائه قطعات اورجینال کامپیوتر، خدمات تعمیرات تخصصی و پشتیبانی حرفه‌ای، بهترین انتخاب برای خرید مطمئن و سریع شماست.">
     @auth
     <meta name="money-words-url" content="{{ route('automation.money.words') }}">
     @endauth
@@ -36,9 +35,7 @@
     <!-- Fonts & Icons -->
     <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
-    
-    <link rel="preload" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}"></noscript>
+    @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
     <!-- Favicon -->
@@ -299,11 +296,7 @@
     .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
     .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
-    @media (max-width: 1024px) {
-        .top-header { padding: 0 1rem; }
-        .content-area { padding: 1rem; }
-        .user-text { display: none; }
-    }
+
 
     .animate-fade-in { animation: fadeIn 0.5s ease-out; }
     .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -445,7 +438,7 @@
     </main>
 
     @if(!$isShopRoute)
-    <footer class="py-8 text-center text-slate-400 text-xs border-t border-slate-100 mt-auto">
+    <footer class="py-8 text-center text-slate-600 text-xs border-t border-slate-100 mt-auto">
         <div class="container mx-auto">
             <p>© {{ date('Y') }} پارس لیان - سیستم مدیریت خدمات فنی</p>
         </div>

@@ -56,7 +56,7 @@ class PaymentFlowTest extends TestCase
                 'payment_url' => 'https://sandbox.zarinpal.com/pg/StartPay/AUTH-123456',
             ]);
 
-        $this->app->instance(PaymentGatewayInterface::class, $mockGateway);
+        $this->app->bind(\App\Services\Payment\PaymentService::class, fn () => new \App\Services\Payment\PaymentService($mockGateway));
 
         // 2. Act
         $response = $this->actingAs($this->user)
@@ -110,7 +110,7 @@ class PaymentFlowTest extends TestCase
                 'card_pan' => '6037********1234',
             ]);
 
-        $this->app->instance(PaymentGatewayInterface::class, $mockGateway);
+        $this->app->bind(\App\Services\Payment\PaymentService::class, fn () => new \App\Services\Payment\PaymentService($mockGateway));
 
         // 2. Act
         $response = $this->actingAs($this->user)
@@ -162,7 +162,7 @@ class PaymentFlowTest extends TestCase
         $mockGateway = Mockery::mock(PaymentGatewayInterface::class);
         $mockGateway->shouldNotReceive('verify');
         
-        $this->app->instance(PaymentGatewayInterface::class, $mockGateway);
+        $this->app->bind(\App\Services\Payment\PaymentService::class, fn () => new \App\Services\Payment\PaymentService($mockGateway));
 
         // 2. Act
         $response = $this->actingAs($this->user)

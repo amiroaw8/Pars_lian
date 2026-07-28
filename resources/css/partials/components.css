@@ -1367,6 +1367,237 @@ body::before {
        background: var(--color-primary-500);
        color: white;
    }
+
+   /* ==========================================================================
+      Mobile-First Responsive Styles (Admin & Shop Mobile Optimization)
+      ========================================================================== */
+
+   /* --- فرم‌ها: عرض کامل در موبایل --- */
+   @media (max-width: 639px) {
+       input[type="text"],
+       input[type="email"],
+       input[type="password"],
+       input[type="tel"],
+       input[type="number"],
+       input[type="search"],
+       input[type="url"],
+       input[type="date"],
+       input:not([type]),
+       select,
+       textarea {
+           width: 100% !important;
+           max-width: 100%;
+           box-sizing: border-box;
+       }
+
+       .form-control,
+       .form-control-modern {
+           width: 100% !important;
+           max-width: 100%;
+           padding: 0.65rem 0.85rem;
+           font-size: 0.85rem;
+       }
+
+       .form-group {
+           margin-bottom: 0.85rem;
+       }
+   }
+
+   /* --- دکمه‌ها: حداقل اندازه لمسی ۴۴ پیکسل (WCAG) --- */
+   .btn-modern:not(.btn-icon):not(.btn-xs):not(.w-auto):not([class*="w-10"]):not([class*="w-9"]):not([class*="w-8"]) {
+       min-height: 44px;
+       min-width: 44px;
+       box-sizing: border-box;
+   }
+
+   .btn:not(.btn-icon):not(.btn-xs):not([class*="w-10"]):not([class*="w-9"]):not([class*="w-8"]),
+   button[type="submit"]:not(.btn-icon):not(.btn-xs):not([class*="w-10"]):not([class*="w-9"]):not([class*="w-8"]),
+   button[type="button"]:not(.btn-icon):not(.btn-xs):not([class*="w-10"]):not([class*="w-9"]):not([class*="w-8"]),
+   .btn-outline:not(.btn-icon):not(.btn-xs),
+   .btn-primary:not(.btn-icon):not(.btn-xs),
+   .btn-secondary:not(.btn-icon):not(.btn-xs) {
+       min-height: 44px;
+       min-width: 44px;
+   }
+
+   .btn-modern.btn-sm,
+   button.btn-sm {
+       min-height: 36px;
+       min-width: 36px;
+   }
+
+   /* --- حفاظت از دکمه‌های آیکونی، عملیات جدول و تولبار در موبایل --- */
+   td > .btn-modern,
+   td > .btn,
+   td button,
+   th button,
+   th > .btn,
+   .card-header > .btn,
+   .card-header > .btn-modern,
+   .card-header button,
+   .btn-group .btn,
+   .btn-group .btn-modern,
+   .btn-group > button,
+   .actions .btn,
+   .actions > .btn-modern,
+   .top-header button,
+   .top-header .btn,
+   .sidebar button,
+   .sidebar .btn,
+   .dropdown-menu .btn,
+   .dropdown-menu .btn-modern,
+   .btn-icon,
+   button.absolute,
+   .btn.absolute,
+   .btn-modern.absolute,
+   button.fixed,
+   .btn.fixed,
+   .btn-modern.fixed,
+   [class*="absolute"].btn,
+   [class*="absolute"].btn-modern,
+   button[class*="absolute"],
+   [class*="fixed"].btn,
+   [class*="fixed"].btn-modern,
+   button[class*="fixed"],
+   [class*="h-10"][class*="w-10"].btn,
+   [class*="h-10"][class*="w-10"].btn-modern,
+   [class*="h-9"][class*="w-9"].btn,
+   [class*="h-9"][class*="w-9"].btn-modern,
+   [class*="h-8"][class*="w-8"].btn,
+   [class*="h-8"][class*="w-8"].btn-modern {
+       min-height: auto !important;
+       min-width: auto !important;
+       width: auto !important;
+       max-width: none !important;
+   }
+
+   @media (max-width: 639px) {
+       /*
+        * فقط دکمه‌های اصلی فرم و CTAهای بزرگ (که داخل form-group یا
+        * card-footer/action-cta تنها یا به صورت عمودی چیده شده‌اند) عرض
+        * کامل بگیرند. دکمه‌های آیکونی، عملیات جدول، تولبار و btn-group
+        * همان عرض اصلی‌شان را حفظ کنند تا نمایش بهم نریزد.
+        */
+       form .btn-modern:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       form .btn:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       form button[type="submit"]:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       form button[type="button"]:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       .card-footer .btn-modern:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       .card-footer .btn:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       .auth-actions .btn-modern:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       .actions-cta > .btn-modern:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]),
+       .actions-cta > .btn:not(.btn-icon):not(.btn-sm):not(.btn-xs):not(.w-auto-sm):not(.absolute):not(.fixed):not([class*="absolute"]):not([class*="fixed"]) {
+           width: 100%;
+           max-width: 100%;
+           justify-content: center;
+       }
+
+       .btn-modern.w-auto-sm,
+       .btn.w-auto-sm,
+       button.w-auto-sm {
+           width: auto;
+       }
+   }
+
+   /* --- بهینه‌سازی کنتينر اصلی و صفحه برای موبایل --- */
+   @media (max-width: 639px) {
+       .page-container {
+           padding: 1rem 0.75rem;
+           max-width: 100%;
+           overflow-x: hidden;
+       }
+
+       .page-header {
+           flex-direction: column;
+           align-items: flex-start;
+           gap: 1rem;
+           margin-bottom: 1.25rem;
+       }
+
+       .page-title {
+           font-size: 1.2rem;
+           gap: 0.5rem;
+       }
+
+       .top-header {
+           padding: 0 1rem;
+           height: calc(var(--header-height) - 4px);
+       }
+   }
+
+   /* --- گرید کارت‌های آماری: ۱ ستون موبایل، ۲ در تبلت، ۴ در دسکتاپ --- */
+   @media (max-width: 639px) {
+       .grid.grid-cols-2,
+       .grid.grid-cols-3,
+       .grid.grid-cols-4 {
+           grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+       }
+   }
+
+   @media (min-width: 640px) and (max-width: 1023px) {
+       .grid.grid-cols-3:not(.sm\:grid-cols-2),
+       .grid.grid-cols-4:not(.sm\:grid-cols-2):not(.md\:grid-cols-2) {
+           grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+       }
+   }
+
+   /* --- جدول‌ها: اسکرول افقی اجباری و عدم شکستن قالب --- */
+   .table-responsive {
+       width: 100%;
+       max-width: 100%;
+       overflow-x: auto;
+       overflow-y: hidden;
+       -webkit-overflow-scrolling: touch;
+       border-radius: 0.75rem;
+       border: 1px solid var(--border-light);
+   }
+
+   @media (max-width: 768px) {
+       .table-responsive {
+           margin: 0 -0.25rem;
+       }
+   }
+
+   /* --- اجزای کارت مدرن: عدم عرض سرریز در موبایل --- */
+   .modern-card,
+   .enhanced-card,
+   .enhanced-table-wrapper {
+       max-width: 100%;
+       overflow-x: hidden;
+   }
+
+   /* --- متن‌ها: شکستن صحیح خطوط در موبایل --- */
+   @media (max-width: 639px) {
+       .card-title,
+       .card-header {
+           padding: 1rem 1rem;
+           font-size: 0.9rem;
+           flex-wrap: wrap;
+           gap: 0.5rem;
+       }
+
+       .card-body {
+           padding: 1rem;
+       }
+
+       .card-footer {
+           padding: 0.85rem 1rem;
+       }
+   }
+
+   /* --- دکمه‌های عملیات درون جدول: نمایش دایمی در موبایل --- */
+   @media (max-width: 768px) {
+       td .group-hover\:opacity-100,
+       td .md\:opacity-0 {
+           opacity: 1 !important;
+       }
+   }
+
+   /* --- قطعات کد و شماره‌ها: عدم سرریز --- */
+   .font-mono {
+       word-break: break-all;
+       overflow-wrap: anywhere;
+   }
    
    .btn-icon {
        width: 40px;

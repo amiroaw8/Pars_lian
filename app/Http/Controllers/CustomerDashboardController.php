@@ -82,7 +82,7 @@ class CustomerDashboardController extends Controller
         $stats = [
             'total_repair_orders' => $this->repairOrdersQuery()->count(),
             'total_shop_orders' => Order::where('user_id', $user->id)->count(),
-            'pending_repairs' => $this->repairOrdersQuery()->whereIn('status', ['registered', 'repairing'])->count(),
+            'pending_repairs' => $this->repairOrdersQuery()->whereNotIn('status', ['delivered', 'archived'])->count(),
             'ready_repairs' => $this->repairOrdersQuery()->where('status', 'ready')->count(),
             'total_invoices' => $financials->total_invoices ?? 0,
             'total_payments' => $financials->total_amount ?? 0,

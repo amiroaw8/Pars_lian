@@ -176,13 +176,33 @@
                     <div class="text-xs text-slate-400 font-black uppercase tracking-widest mb-4">وضعیت فعلی</div>
                     <x-enhanced-status-badge :status="$order->status->value" size="lg" />
                     <p class="mt-6 text-sm text-slate-500 font-medium leading-relaxed">
-                        {{ $order->status->label() ?? 'سفارش شما در حال پردازش می‌باشد.' }}
+                        @switch($order->status->value)
+                            @case('pending') سفارش شما دریافت شده و در انتظار بررسی توسط تیم ما است. @break
+                            @case('processing') سفارش شما تأیید شده و در حال آماده‌سازی برای ارسال است. @break
+                            @case('shipped') سفارش شما ارسال شده و در راه است. @break
+                            @case('delivered') سفارش شما با موفقیت تحویل داده شده است. @break
+                            @case('cancelled') این سفارش لغو شده است. @break
+                            @default سفارش شما در حال پردازش می‌باشد.
+                        @endswitch
                     </p>
                 </div>
 
                 <div class="p-6 rounded-[2rem] bg-emerald-50 border border-emerald-100 text-center">
                     <div class="text-xs text-emerald-400 font-black uppercase tracking-widest mb-4">وضعیت پرداخت</div>
-                    <x-enhanced-status-badge :status="$order->payment_status->value" size="lg" />
+                    @php
+                        $paymentVariant = match($order->payment_status->value) {
+                            'paid'     => 'success-solid',
+                            'failed'   => 'danger',
+                            'refunded' => 'secondary',
+                            default    => 'warning',
+                        };
+                    @endphp
+                    <x-enhanced-status-badge
+                        :status="$order->payment_status->value"
+                        :label="$order->payment_status->label()"
+                        :variant="$paymentVariant"
+                        size="lg"
+                    />
                 </div>
             </div>
         </x-enhanced-card>

@@ -242,33 +242,33 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-right">
+            <div class="overflow-x-auto w-full rounded-xl border border-gray-200">
+                <table class="min-w-full w-full text-right">
                     <thead>
                         <tr class="border-b border-slate-100">
-                            <th class="px-8 py-4 text-[10px] font-black text-slate-400 uppercase tracking-wider">عنوان</th>
-                            <th class="px-8 py-4 text-[10px] font-black text-slate-400 uppercase tracking-wider">منبع داده</th>
-                            <th class="px-8 py-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-wider">تعداد</th>
-                            <th class="px-8 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-wider">مبلغ (تومان)</th>
+                            <th class="px-4 sm:px-8 py-3 sm:py-4 whitespace-nowrap text-[10px] font-black text-slate-400 uppercase tracking-wider">عنوان</th>
+                            <th class="px-4 sm:px-8 py-3 sm:py-4 whitespace-nowrap text-[10px] font-black text-slate-400 uppercase tracking-wider">منبع داده</th>
+                            <th class="px-4 sm:px-8 py-3 sm:py-4 whitespace-nowrap text-center text-[10px] font-black text-slate-400 uppercase tracking-wider">تعداد</th>
+                            <th class="px-4 sm:px-8 py-3 sm:py-4 whitespace-nowrap text-left text-[10px] font-black text-slate-400 uppercase tracking-wider">مبلغ (تومان)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         @foreach($financialBreakdown ?? [] as $row)
                             @if($row['key'] !== 'expenses')
                             <tr class="hover:bg-slate-50/60 transition-colors">
-                                <td class="px-8 py-5">
+                                <td class="px-4 sm:px-8 py-4 sm:py-5 whitespace-nowrap">
                                     <span class="font-black text-slate-800 text-sm">{{ $row['label'] }}</span>
                                 </td>
-                                <td class="px-8 py-5">
+                                <td class="px-4 sm:px-8 py-4 sm:py-5">
                                     <p class="text-xs text-slate-500 font-medium leading-relaxed max-w-xl">{{ $row['source'] }}</p>
                                 </td>
-                                <td class="px-8 py-5 text-center">
+                                <td class="px-4 sm:px-8 py-4 sm:py-5 text-center whitespace-nowrap">
                                     <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-black">
                                         {{ number_format($row['count']) }}
                                         <span class="text-slate-400 font-bold">{{ $row['count_label'] }}</span>
                                     </span>
                                 </td>
-                                <td class="px-8 py-5 text-left">
+                                <td class="px-4 sm:px-8 py-4 sm:py-5 text-left whitespace-nowrap">
                                     <span class="font-black text-slate-900">{{ number_format($row['amount']) }}</span>
                                 </td>
                             </tr>
@@ -276,7 +276,7 @@
                         @endforeach
 
                         <tr class="bg-blue-50/40">
-                            <td class="px-8 py-5 font-black text-blue-800" colspan="2">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 font-black text-blue-800 whitespace-nowrap" colspan="2">
                                 <span class="text-sm">جمع درآمد (فروش + خدمات)</span>
                                 <p class="text-[11px] text-blue-600/80 font-bold mt-1">
                                     {{ number_format($totalShopSales ?? 0) }}
@@ -285,8 +285,8 @@
                                     = {{ number_format($totalIncome ?? 0) }}
                                 </p>
                             </td>
-                            <td class="px-8 py-5 text-center text-xs font-bold text-blue-600">—</td>
-                            <td class="px-8 py-5 text-left">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 text-center text-xs font-bold text-blue-600 whitespace-nowrap">—</td>
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 text-left whitespace-nowrap">
                                 <span class="text-lg font-black text-blue-700">{{ number_format($totalIncome ?? 0) }}</span>
                             </td>
                         </tr>
@@ -294,26 +294,26 @@
                         @php $expenseRow = collect($financialBreakdown ?? [])->firstWhere('key', 'expenses'); @endphp
                         @if($expenseRow)
                         <tr class="hover:bg-rose-50/30 transition-colors">
-                            <td class="px-8 py-5">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 whitespace-nowrap">
                                 <span class="font-black text-rose-700 text-sm">{{ $expenseRow['label'] }}</span>
                             </td>
-                            <td class="px-8 py-5">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5">
                                 <p class="text-xs text-slate-500 font-medium leading-relaxed max-w-xl">{{ $expenseRow['source'] }}</p>
                             </td>
-                            <td class="px-8 py-5 text-center">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 text-center whitespace-nowrap">
                                 <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[11px] font-black">
                                     {{ number_format($expenseRow['count']) }}
                                     <span class="text-rose-400 font-bold">{{ $expenseRow['count_label'] }}</span>
                                 </span>
                             </td>
-                            <td class="px-8 py-5 text-left">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 text-left whitespace-nowrap">
                                 <bdi dir="ltr" class="font-black text-rose-600">−{{ number_format($expenseRow['amount']) }}</bdi>
                             </td>
                         </tr>
                         @endif
 
                         <tr class="bg-slate-900 text-white">
-                            <td class="px-8 py-6 font-black" colspan="2">
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 font-black whitespace-nowrap" colspan="2">
                                 <span class="text-sm">سود خالص عملیاتی (تحقق‌یافته)</span>
                                 <p class="text-[11px] text-slate-400 font-bold mt-1">
                                     جمع درآمد {{ number_format($totalIncome ?? 0) }} منهای هزینه‌ها {{ number_format($totalExpenses ?? 0) }}
@@ -322,14 +322,14 @@
                                     @endif
                                 </p>
                             </td>
-                            <td class="px-8 py-6 text-center text-xs text-slate-500">—</td>
-                            <td class="px-8 py-6 text-left">
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 text-center text-xs text-slate-500 whitespace-nowrap">—</td>
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 text-left whitespace-nowrap">
                                 <span class="text-2xl font-black text-emerald-400">{{ number_format($netProfit ?? 0) }}</span>
                             </td>
                         </tr>
 
                         <tr class="bg-amber-50/80 border-t-2 border-amber-200">
-                            <td class="px-8 py-4 font-black text-amber-900" colspan="4">
+                            <td class="px-4 sm:px-8 py-4 font-black text-amber-900 whitespace-nowrap" colspan="4">
                                 <span class="text-sm flex items-center gap-2">
                                     <i class="ti ti-clock-dollar text-amber-600"></i>
                                     سود تحقق‌نیافته — درآمد معوق و پرداخت‌نشده
@@ -342,26 +342,26 @@
 
                         @foreach($unrealizedBreakdown ?? [] as $row)
                         <tr class="hover:bg-amber-50/40 transition-colors">
-                            <td class="px-8 py-5">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 whitespace-nowrap">
                                 <span class="font-black text-amber-900 text-sm">{{ $row['label'] }}</span>
                             </td>
-                            <td class="px-8 py-5">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5">
                                 <p class="text-xs text-slate-500 font-medium leading-relaxed max-w-xl">{{ $row['source'] }}</p>
                             </td>
-                            <td class="px-8 py-5 text-center">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 text-center whitespace-nowrap">
                                 <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-[11px] font-black">
                                     {{ number_format($row['count']) }}
                                     <span class="text-amber-500 font-bold">{{ $row['count_label'] }}</span>
                                 </span>
                             </td>
-                            <td class="px-8 py-5 text-left">
+                            <td class="px-4 sm:px-8 py-4 sm:py-5 text-left whitespace-nowrap">
                                 <span class="font-black {{ $row['amount'] > 0 ? 'text-amber-700' : 'text-slate-300' }}">{{ number_format($row['amount']) }}</span>
                             </td>
                         </tr>
                         @endforeach
 
                         <tr class="bg-amber-500 text-white">
-                            <td class="px-8 py-6 font-black" colspan="2">
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 font-black whitespace-nowrap" colspan="2">
                                 <span class="text-sm">جمع سود تحقق‌نیافته</span>
                                 @php
                                     $unrealizedRows = collect($unrealizedBreakdown ?? []);
@@ -381,22 +381,22 @@
                                     = {{ number_format($unrealizedProfit ?? 0) }}
                                 </p>
                             </td>
-                            <td class="px-8 py-6 text-center text-xs text-amber-100">—</td>
-                            <td class="px-8 py-6 text-left">
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 text-center text-xs text-amber-100 whitespace-nowrap">—</td>
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 text-left whitespace-nowrap">
                                 <span class="text-2xl font-black text-white">{{ number_format($unrealizedProfit ?? 0) }}</span>
                             </td>
                         </tr>
 
                         <tr class="bg-indigo-950 text-white">
-                            <td class="px-8 py-6 font-black" colspan="2">
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 font-black whitespace-nowrap" colspan="2">
                                 <span class="text-sm">پتانسیل کل سود (تحقق‌یافته + تحقق‌نیافته)</span>
                                 <p class="text-[11px] text-indigo-300 font-bold mt-1">
                                     سود تحقق‌یافته {{ number_format($netProfit ?? 0) }} + سود تحقق‌نیافته {{ number_format($unrealizedProfit ?? 0) }}
                                     = {{ number_format(($netProfit ?? 0) + ($unrealizedProfit ?? 0)) }}
                                 </p>
                             </td>
-                            <td class="px-8 py-6 text-center text-xs text-indigo-400">—</td>
-                            <td class="px-8 py-6 text-left">
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 text-center text-xs text-indigo-400 whitespace-nowrap">—</td>
+                            <td class="px-4 sm:px-8 py-5 sm:py-6 text-left whitespace-nowrap">
                                 <span class="text-2xl font-black text-indigo-300">{{ number_format(($netProfit ?? 0) + ($unrealizedProfit ?? 0)) }}</span>
                             </td>
                         </tr>

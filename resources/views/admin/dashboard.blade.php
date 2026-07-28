@@ -18,7 +18,7 @@
 </div>
 
 <!-- آمار پیشرفته BI -->
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-8 animate-slide-up" style="animation-delay: 0.15s;">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-slide-up" style="animation-delay: 0.15s;">
     <div class="stat-card-admin bg-gradient-to-br from-primary-600 to-primary-700 p-5 rounded-2xl shadow-lg text-white group overflow-hidden relative">
         <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
             <i class="ti ti-chart-arrows-vertical text-8xl"></i>
@@ -167,7 +167,7 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 animate-slide-up" style="animation-delay: 0.2s;">
     <!-- توزیع نقش‌ها -->
     <x-enhanced-card title="توزیع نقش‌های کاربری" icon="ti-chart-pie">
         <div class="space-y-6">
@@ -284,7 +284,7 @@
 </div>
 
 <!-- ردیف دوم تحلیل BI -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 animate-slide-up" style="animation-delay: 0.25s;">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8 animate-slide-up" style="animation-delay: 0.25s;">
     <!-- عملکرد تکنسین‌ها -->
     <x-enhanced-card title="عملکرد تکنسین‌ها (BI)" icon="ti-user-bolt">
         <div class="space-y-4">
@@ -340,7 +340,7 @@
 </div>
 
 <!-- محصولات پرفروش و آمار مشتریان -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 animate-slide-up" style="animation-delay: 0.3s;">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 animate-slide-up" style="animation-delay: 0.3s;">
     <!-- محصولات پرفروش -->
     <x-enhanced-card title="محصولات پرفروش" icon="ti-shopping-cart-bolt" class="lg:col-span-2">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

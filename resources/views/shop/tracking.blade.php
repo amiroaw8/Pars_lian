@@ -6,8 +6,9 @@
 <div class="max-w-2xl mx-auto px-4 py-12">
     <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
         <div class="bg-gray-900 px-8 py-6 text-white text-center">
-            <h1 class="text-2xl font-black">پیگیری وضعیت سفارش</h1>
-            <p class="text-sm text-gray-300 mt-2">سامانه خدمات و فروشگاه پارس لیان</p>
+            <h1 class="text-2xl font-black">پیگیری وضعیت سفارش ( بدون نیاز به ورود )</h1>
+<hr class="my-4 border-gray-200">
+<p class="text-sm text-gray-300 mt-2">برای دیدن همه جزییات سفارشات از پنل کاربری خود پیگیری کنید.</p>
         </div>
 
         <div class="p-8">
@@ -85,16 +86,16 @@
             @else
                 <form action="{{ route('tracking.index') }}" method="GET" class="space-y-6">
                     <div>
-                        <label for="tracking_id" class="block text-sm font-black text-gray-700 mb-2">شماره سفارش / کد پیگیری</label>
+                        <label for="tracking_id" class="block text-sm font-black text-gray-700 mb-2">شماره سفارش / کد پیگیری(بدون علامت # )</label>
                         <input type="text" name="tracking_id" id="tracking_id" value="{{ request('tracking_id') }}"
-                               class="w-full rounded-2xl border-gray-200 focus:border-blue-500 focus:ring-blue-500 font-bold px-4 py-3"
-                               placeholder="مثال: 1024 یا PL-12345" required>
+                               class="w-full rounded-2xl border-gray-200 focus:border-blue-500 focus:ring-blue-500 font-bold px-4 py-3 text-left placeholder:text-left" dir="ltr"
+                               placeholder="&#x202B;مثال: 1024 یا ORD-XXXX&#x202C;" required>
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-black text-gray-700 mb-2">شماره موبایل</label>
                         <input type="tel" name="phone" id="phone" value="{{ request('phone') }}"
-                               class="w-full rounded-2xl border-gray-200 focus:border-blue-500 focus:ring-blue-500 font-bold px-4 py-3"
-                               placeholder="مثال: 09123456789" required>
+                               class="w-full rounded-2xl border-gray-200 focus:border-blue-500 focus:ring-blue-500 font-bold px-4 py-3 text-left placeholder:text-left" dir="ltr"
+                               placeholder="&#x202B;مثال: 09123456789&#x202C;" required>
                     </div>
                     <button type="submit" class="w-full py-4 bg-gray-900 text-white rounded-2xl font-black hover:bg-blue-600 transition-colors">
                         پیگیری سفارش

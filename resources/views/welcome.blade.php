@@ -7,7 +7,7 @@
     
     <!-- Fonts & Icons -->
     <link href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" rel="stylesheet">
+    @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
     <style>
@@ -72,7 +72,7 @@
                 نسخه جدید پلتفرم پارس لیان
             </div>
             
-            <h1 class="text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
                 مدیریت هوشمند <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-l from-blue-600 to-indigo-600">خدمات و مشتریان</span>
             </h1>

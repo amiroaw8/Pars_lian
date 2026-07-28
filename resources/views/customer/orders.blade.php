@@ -75,8 +75,8 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 bg-white group-hover:bg-transparent transition-colors">
-                                    <div class="max-w-[200px] truncate text-sm text-slate-500 font-medium bg-slate-50/50 px-4 py-2 rounded-xl group-hover:bg-white/50 transition-colors" title="{{ $order->problem_description }}">
-                                        {{ $order->problem_description }}
+                                    <div class="max-w-[200px] truncate text-sm text-slate-500 font-medium bg-slate-50/50 px-4 py-2 rounded-xl group-hover:bg-white/50 transition-colors" title="{{ $order->fault }}">
+                                        {{ $order->fault ?? '-' }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 text-center bg-white group-hover:bg-transparent transition-colors">
@@ -160,7 +160,8 @@
                             <tr class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">
                                 <th class="px-6 py-2">شماره سفارش</th>
                                 <th class="px-6 py-2">اقلام</th>
-                                <th class="px-6 py-2 text-center">وضعیت</th>
+                                <th class="px-6 py-2 text-center">وضعیت سفارش</th>
+                                <th class="px-6 py-2 text-center">وضعیت پرداخت</th>
                                 <th class="px-6 py-2">تاریخ ثبت</th>
                                 <th class="px-6 py-2 text-center">مبلغ کل</th>
                                 <th class="px-6 py-2 text-center">عملیات</th>
@@ -184,6 +185,21 @@
                                 </td>
                                 <td class="px-6 py-5 text-center bg-white group-hover:bg-transparent transition-colors">
                                     <x-enhanced-status-badge :status="$order->status->value ?? $order->status" />
+                                </td>
+                                <td class="px-6 py-5 text-center bg-white group-hover:bg-transparent transition-colors">
+                                    @php
+                                        $paymentVariant = match($order->payment_status->value ?? $order->payment_status) {
+                                            'paid'     => 'success-solid',
+                                            'failed'   => 'danger',
+                                            'refunded' => 'secondary',
+                                            default    => 'warning',
+                                        };
+                                    @endphp
+                                    <x-enhanced-status-badge
+                                        :status="$order->payment_status->value ?? $order->payment_status"
+                                        :label="$order->payment_status->label()"
+                                        :variant="$paymentVariant"
+                                    />
                                 </td>
                                 <td class="px-6 py-5 bg-white group-hover:bg-transparent transition-colors">
                                     <div class="flex flex-col">
@@ -219,7 +235,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="py-20 text-center">
+                                <td colspan="7" class="py-20 text-center">
                                     <div class="flex flex-col items-center gap-8 max-w-md mx-auto">
                                         <div class="text-slate-400 font-medium">سفارش فروشی یافت نشد.</div>
                                     </div>

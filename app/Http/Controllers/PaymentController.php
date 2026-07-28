@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Services\Payment\PaymentService;
 use Illuminate\Http\Request;
 use Exception;
-
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
@@ -19,34 +17,62 @@ class PaymentController extends Controller
         $this->paymentService = $paymentService;
     }
 
-    public function pay(Order $order)
+    public function pay(Order $order, Request $request)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Ensure user owns the order or has permission
         if ($user->id !== $order->user_id && !$user->can('manage_orders')) {
             abort(403);
         }
 
         try {
-            $paymentUrl = $this->paymentService->initiatePayment($order);
-            return redirect($paymentUrl);
+            $driver = $request->query('driver') ?? $request->input('driver') ?? $order->payment_gateway;
+            $payResponse = $this->paymentService->initiatePayment($order, $driver);
+
+            if (is_string($payResponse)) {
+                return redirect()->away($payResponse);
+            }
+
+            if ($payResponse instanceof \Shetabit\Multipay\RedirectionForm) {
+                if (strtoupper($payResponse->getMethod()) === 'GET' && empty($payResponse->getInputs())) {
+                    return redirect()->away($payResponse->getAction());
+                }
+
+                return response($payResponse->render());
+            }
+
+            return $payResponse;
         } catch (Exception $e) {
             return back()->with('error', 'خطا در ایجاد تراکنش: ' . $e->getMessage());
         }
     }
 
-    public function callback(Request $request)
+    public function callback(Request $request, ?Order $order = null)
     {
-        $authority = $request->query('Authority');
-        $status = $request->query('Status');
-
         try {
-            $transaction = \App\Models\PaymentTransaction::with('order')->where('transaction_id', $authority)->firstOrFail();
-            $order = $transaction->order;
+            if (!$order || !$order->exists) {
+                $authority = $request->query('Authority')
+                    ?? $request->input('Authority')
+                    ?? $request->input('trackId')
+                    ?? $request->input('trans_id')
+                    ?? $request->input('token');
 
-            $success = $this->paymentService->verifyPayment($order, $authority, $status);
+                $transaction = \App\Models\PaymentTransaction::with('order')
+                    ->where('transaction_id', $authority)
+                    ->latest()
+                    ->first();
+
+                if ($transaction && $transaction->order) {
+                    $order = $transaction->order;
+                }
+            }
+
+            if (!$order) {
+                return redirect('/')->with('error', 'سفارش مورد نظر جهت بازگشت از پرداخت یافت نشد.');
+            }
+
+            $success = $this->paymentService->verifyPayment($order, $request);
 
             if ($success) {
                 return to_route('checkout.success', $order->order_number)
@@ -56,10 +82,8 @@ class PaymentController extends Controller
             return to_route('checkout.success', $order->order_number)
                 ->with('error', 'پرداخت ناموفق بود. سفارش ثبت شده و می‌توانید مجدداً پرداخت کنید.');
         } catch (Exception $e) {
-            // Provide a generic error fallback in case order resolution fails before verifying payment
-            // Or if we successfully got order, redirect to it:
-            if (isset($order)) {
-                return to_route('customer.orders.shop-show', $order)->with('error', 'خطا در تایید پرداخت: ' . $e->getMessage());
+            if (isset($order) && $order->order_number) {
+                return to_route('checkout.success', $order->order_number)->with('error', 'خطا در تایید پرداخت: ' . $e->getMessage());
             }
             return redirect('/')->with('error', 'خطا در تایید پرداخت: ' . $e->getMessage());
         }

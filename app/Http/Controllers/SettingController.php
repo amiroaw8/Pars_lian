@@ -8,6 +8,7 @@ use App\Models\PaymentStatusModel;
 use App\Models\ServiceOrderStatusModel;
 use App\Support\AssignableTechnicians;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
@@ -22,7 +23,8 @@ class SettingController extends Controller
         // This should be handled by middleware or policy, but adding a check here is good practice
         // if (!auth()->user()->isAdmin()) abort(403);
 
-        $printSettings = Setting::whereIn('group', ['print_header', 'print_footer', 'print_receipt', 'print_invoice', 'print_thermal'])
+        $printSettings = Setting::query()
+            ->whereIn('group', ['print_header', 'print_footer', 'print_receipt', 'print_invoice', 'print_thermal'])
             ->orderBy('group')
             ->orderBy('id')
             ->get()
@@ -33,9 +35,12 @@ class SettingController extends Controller
         $shopPaymentStatuses = PaymentStatusModel::orderBy('id')->get();
         $smsCategories = \App\Support\SmsNotifications::categories();
 
-        $securitySettings = Setting::where('group', 'security')->orderBy('id')->get();
+        $securitySettings = Setting::query()->where('group', 'security')->orderBy('id')->get();
 
-        $serviceStaffCandidates = auth()->user()?->isSuperAdmin()
+        /** @var \App\Models\User|null $currentUser */
+        $currentUser = Auth::user();
+
+        $serviceStaffCandidates = $currentUser?->isSuperAdmin()
             ? AssignableTechnicians::candidates()
             : collect();
 
@@ -43,6 +48,14 @@ class SettingController extends Controller
         if ($selectedAssignableTechnicianIds === []) {
             $selectedAssignableTechnicianIds = AssignableTechnicians::allowedIds();
         }
+
+        $siteLicenses = json_decode(Setting::get('site_licenses', '[]'), true);
+        if (!is_array($siteLicenses)) {
+            $siteLicenses = [];
+        }
+
+        $paymentSettings = \App\Services\Payment\PaymentGatewayManager::getSettings();
+        $supportedGatewayDrivers = \App\Services\Payment\PaymentGatewayManager::supportedDrivers();
 
         return view('settings.index', compact(
             'printSettings',
@@ -53,6 +66,9 @@ class SettingController extends Controller
             'securitySettings',
             'serviceStaffCandidates',
             'selectedAssignableTechnicianIds',
+            'siteLicenses',
+            'paymentSettings',
+            'supportedGatewayDrivers'
         ));
     }
 
@@ -140,11 +156,18 @@ class SettingController extends Controller
         return Redirect::back()->with('success', 'تنظیمات پیامک با موفقیت ذخیره شد.');
     }
 
-    public function updateSecurity(Request $request)
+    private function checkSuperAdmin(): void
     {
-        if (! auth()->user()?->isSuperAdmin()) {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        if (! $user?->isSuperAdmin()) {
             abort(403);
         }
+    }
+
+    public function updateSecurity(Request $request)
+    {
+        $this->checkSuperAdmin();
 
         Setting::set('two_factor_enabled', $request->boolean('two_factor_enabled') ? '1' : '0', [
             'group' => 'security',
@@ -157,9 +180,7 @@ class SettingController extends Controller
 
     public function updateService(Request $request)
     {
-        if (! auth()->user()?->isSuperAdmin()) {
-            abort(403);
-        }
+        $this->checkSuperAdmin();
 
         $request->validate([
             'assignable_technician_ids' => ['nullable', 'array'],
@@ -170,5 +191,65 @@ class SettingController extends Controller
         AssignableTechnicians::saveConfiguredIds($ids);
 
         return Redirect::back()->with('success', 'تنظیمات پذیرش و تکنسین ذخیره شد.');
+    }
+
+    public function addLicense(Request $request)
+    {
+        $this->checkSuperAdmin();
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'url' => 'required|url',
+        ]);
+
+        $licenses = json_decode(Setting::get('site_licenses', '[]'), true);
+        if (!is_array($licenses)) {
+            $licenses = [];
+        }
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('public/licenses');
+            $licenses[] = [
+                'image' => str_replace('public/', 'storage/', $path),
+                'url' => $request->input('url')
+            ];
+
+            Setting::set('site_licenses', json_encode($licenses), [
+                'group' => 'general',
+                'label' => 'مجوزات سایت',
+                'type' => 'json'
+            ]);
+        }
+
+        return Redirect::back()->with('success', 'مجوز با موفقیت افزوده شد.');
+    }
+
+    public function removeLicense(int $index)
+    {
+        $this->checkSuperAdmin();
+
+        $licenses = json_decode(Setting::get('site_licenses', '[]'), true);
+        if (is_array($licenses) && isset($licenses[$index])) {
+            $imagePath = str_replace('storage/', 'public/', $licenses[$index]['image']);
+            \Illuminate\Support\Facades\Storage::delete($imagePath);
+            array_splice($licenses, $index, 1);
+            
+            Setting::set('site_licenses', json_encode($licenses), [
+                'group' => 'general',
+                'label' => 'مجوزات سایت',
+                'type' => 'json'
+            ]);
+        }
+
+        return Redirect::back()->with('success', 'مجوز حذف شد.');
+    }
+
+    public function updatePaymentGateways(Request $request)
+    {
+        $this->checkSuperAdmin();
+
+        \App\Services\Payment\PaymentGatewayManager::saveSettings($request->all());
+
+        return Redirect::back()->with('success', 'تنظیمات درگاه‌های پرداخت با موفقیت بروزرسانی شد.');
     }
 }

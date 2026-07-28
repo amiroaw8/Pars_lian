@@ -33,6 +33,13 @@ trait CalculatesOrderTotals
      */
     public function calculateAmounts(float $subtotal): array
     {
+        if ($subtotal == 0) {
+            return [
+                'tax_amount' => 0,
+                'shipping_amount' => 0,
+            ];
+        }
+
         $shipping = $subtotal > $this->getShippingThreshold() ? 0 : $this->getFlatShippingCost();
 
         return [

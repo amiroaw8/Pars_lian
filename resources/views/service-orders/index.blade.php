@@ -185,53 +185,53 @@
 </div>
 
 <!-- Table -->
-<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden animate-slide-up" style="animation-delay: 300ms;">
-    <div class="overflow-x-auto">
-        <table class="w-full text-right">
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden animate-slide-up w-full max-w-full" style="animation-delay: 300ms;">
+    <div class="overflow-x-auto w-full rounded-xl">
+        <table class="min-w-full w-full text-right divide-y divide-gray-200">
             <thead>
                 <tr class="bg-slate-50 border-b border-slate-100 text-xs uppercase text-slate-500">
-                    <th class="px-6 py-4 font-bold">شماره سفارش</th>
-                    <th class="px-6 py-4 font-bold">مشتری</th>
-                    <th class="px-6 py-4 font-bold">دستگاه</th>
-                    <th class="px-6 py-4 font-bold">وضعیت</th>
-                    <th class="px-6 py-4 font-bold">تکنسین</th>
-                    <th class="px-6 py-4 font-bold">تاریخ ثبت</th>
-                    <th class="px-6 py-4 font-bold text-center">عملیات</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">شماره سفارش</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">مشتری</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">دستگاه</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">وضعیت</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">تکنسین</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">تاریخ ثبت</th>
+                    <th class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap text-center">عملیات</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
                 @forelse($serviceOrders as $order)
                 <tr class="hover:bg-slate-50/50 transition-colors group">
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         <div class="flex flex-col">
                             <span class="font-bold text-slate-700 font-mono text-sm"><x-hash-ref :value="$order->id" /></span>
                             <span class="text-[10px] text-slate-400 mt-1">{{ $order->service_type === 'on_site' ? 'خدمات در محل' : 'مراجعه حضوری' }}</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center text-sm font-bold">
+                            <div class="w-8 h-8 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center text-sm font-bold shrink-0">
                                 {{ substr($order->customer->name ?? '?', 0, 1) }}
                             </div>
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-slate-700">{{ $order->customer->name ?? 'ناشناس' }}</span>
+                            <div class="min-w-0">
+                                <span class="text-sm font-bold text-slate-700 block truncate">{{ $order->customer->name ?? 'ناشناس' }}</span>
                                 <span class="text-[11px] text-slate-400 font-mono">{{ $order->customer->phone ?? '-' }}</span>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         <div class="flex flex-col">
                             <span class="text-sm font-medium text-slate-700">{{ $order->device->model ?? '-' }}</span>
                             <span class="text-[11px] text-slate-400">{{ $order->device->type ?? '-' }}</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         <x-enhanced-status-badge :status="$order->status" />
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         @if($order->technician)
                             <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] text-slate-500">
+                                <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] text-slate-500 shrink-0">
                                     <i class="ti ti-user"></i>
                                 </div>
                                 <span class="text-xs text-slate-600">{{ $order->technician->name }}</span>
@@ -240,14 +240,14 @@
                             <span class="text-xs text-slate-400 italic">تعیین نشده</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         <div class="flex flex-col">
                             <span class="text-xs text-slate-600 dir-ltr text-right">{{ \Morilog\Jalali\Jalalian::fromDateTime($order->created_at)->format('Y/m/d') }}</span>
                             <span class="text-[10px] text-slate-400 dir-ltr text-right">{{ \Morilog\Jalali\Jalalian::fromDateTime($order->created_at)->format('H:i') }}</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+                        <div class="flex items-center justify-center gap-2 md:gap-1">
                             <a href="{{ route('automation.service-orders.show', $order) }}" 
                                class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-600 hover:border-primary-500 hover:text-primary-600 flex items-center justify-center transition-all shadow-sm hover:shadow-md"
                                title="مشاهده جزئیات">

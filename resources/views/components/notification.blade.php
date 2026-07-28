@@ -1,7 +1,4 @@
-<?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
-
-$__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
+@props([
     'type' => 'info',
     'title' => null,
     'message' => '',
@@ -9,42 +6,12 @@ $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'duration' => 5000,
     'closable' => true,
     'actions' => null
-]));
-
-foreach ($attributes->all() as $__key => $__value) {
-    if (in_array($__key, $__propNames)) {
-        $$__key = $$__key ?? $__value;
-    } else {
-        $__newAttributes[$__key] = $__value;
-    }
-}
-
-$attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
-
-unset($__propNames);
-unset($__newAttributes);
-
-foreach (array_filter(([
-    'type' => 'info',
-    'title' => null,
-    'message' => '',
-    'icon' => null,
-    'duration' => 5000,
-    'closable' => true,
-    'actions' => null
-]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
-    $$__key = $$__key ?? $__value;
-}
-
-$__defined_vars = get_defined_vars();
-
-foreach ($attributes->all() as $__key => $__value) {
-    if (array_key_exists($__key, $__defined_vars)) unset($$__key);
-}
-
-unset($__defined_vars, $__key, $__value); ?>
+])
 
 <?php
+    $type = $type ?? 'info';
+    $duration = $duration ?? 5000;
+
     $typeClasses = [
         'success' => [
             'bg' => 'bg-gradient-to-r from-green-500 to-emerald-600',
@@ -72,7 +39,8 @@ unset($__defined_vars, $__key, $__value); ?>
         ]
     ];
 
-    $config = $typeClasses[$type] ?? $typeClasses['info'];
+    $typeKey = is_string($type) ? $type : 'info';
+    $config = $typeClasses[$typeKey] ?? $typeClasses['info'];
     $finalIcon = $icon ?? $config['icon'];
 ?>
 
@@ -83,8 +51,8 @@ unset($__defined_vars, $__key, $__value); ?>
 >
     <div class="{{ $config['bg'] }} {{ $config['border'] }} rounded-2xl shadow-2xl border backdrop-blur-sm overflow-hidden">
         <!-- Progress Bar -->
-        <div class="notification-progress absolute top-0 left-0 h-1 bg-white/30 transition-all duration-100 ease-linear"
-             style="width: 100%; animation: shrink <?php echo $duration; ?>ms linear forwards;"></div>
+        <div class="notification-progress absolute top-0 left-0 w-full h-1 bg-white/30 transition-all duration-100 ease-linear"
+             {!! 'style="transform-origin: left; transform: scaleX(1); animation: shrink ' . $duration . 'ms linear forwards;"' !!}></div>
 
         <div class="p-4">
             <div class="flex items-start gap-3">
@@ -119,7 +87,7 @@ unset($__defined_vars, $__key, $__value); ?>
                 @if($closable)
                     <button
                         class="notification-close flex-shrink-0 w-6 h-6 rounded-lg bg-white/20 hover:bg-white/30 text-white/80 hover:text-white transition-all duration-200 flex items-center justify-center hover:scale-110"
-                        onclick="closeNotification(this)"
+                        onclick="closeNotification(this)" aria-label="بستن اعلان"
                     >
                         <i class="ti ti-x text-xs"></i>
                     </button>
@@ -135,8 +103,8 @@ unset($__defined_vars, $__key, $__value); ?>
 
 <style>
     @keyframes shrink {
-        from { width: 100%; }
-        to { width: 0%; }
+        from { transform: scaleX(1); }
+        to { transform: scaleX(0); }
     }
 
     .enhanced-notification {
@@ -221,8 +189,8 @@ unset($__defined_vars, $__key, $__value); ?>
                  data-duration="${duration}"
                  style="top: ${100 + (activeNotifications - 1) * 80}px; left: 1rem; min-width: 320px; max-width: 480px;">
                 <div class="${getNotificationClasses(type)} rounded-2xl shadow-2xl border backdrop-blur-sm overflow-hidden">
-                    <div class="notification-progress absolute top-0 left-0 h-1 bg-white/30 transition-all duration-100 ease-linear"
-                         style="width: 100%; animation: shrink ${duration}ms linear forwards;"></div>
+                    <div class="notification-progress absolute top-0 left-0 w-full h-1 bg-white/30 transition-all duration-100 ease-linear"
+                         style="transform-origin: left; transform: scaleX(1); animation: shrink ${duration}ms linear forwards;"></div>
                     <div class="p-4">
                         <div class="flex items-start gap-3">
                             <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shadow-lg">
@@ -235,7 +203,7 @@ unset($__defined_vars, $__key, $__value); ?>
                             </div>
                             ${closable ? `
                                 <button class="notification-close flex-shrink-0 w-6 h-6 rounded-lg bg-white/20 hover:bg-white/30 text-white/80 hover:text-white transition-all duration-200 flex items-center justify-center hover:scale-110"
-                                        onclick="closeNotification(this)">
+                                        onclick="closeNotification(this)" aria-label="بستن اعلان">
                                     <i class="ti ti-x text-xs"></i>
                                 </button>
                             ` : ''}

@@ -824,33 +824,40 @@
     <header class="sticky top-0 z-50 transition-all duration-500" id="main-shop-header">
         <h1 class="sr-only">فروشگاه پارس لیان</h1>
         <!-- Unified Header: Logo, Search, Nav & Actions -->
-        <div class="bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-lg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Top Row: Logo, Search, User Menu -->
-                <div class="flex justify-between items-center py-4 gap-4">
+        <div class="bg-white/85 backdrop-blur-md border-b border-white/30 shadow-sm">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+
+                <!-- ═══════════════════════════════════════════════════════════════
+                     ROW 1 (Mobile & Desktop): Logo  ←  Action Buttons
+                     ═══════════════════════════════════════════════════════════════ -->
+                <div class="flex flex-wrap items-center justify-between py-2 sm:py-4 gap-y-2">
+
                     <!-- Logo Section -->
                     <div class="flex items-center flex-shrink-0">
                         <a href="{{ route('shop.index') }}" class="inline-flex shrink-0 hover:opacity-90 transition-opacity duration-200">
-                            <x-shop-logo-mark size="xl" />
+                            <x-shop-logo-mark size="xl" class="h-12 sm:h-16 max-w-[180px] sm:max-w-[320px]" />
                         </a>
                     </div>
 
-                    <!-- Search Bar Section -->
-                    <div class="flex-1 max-w-2xl">
+                    <!-- ═══════════════════════════════════════════════════════════
+                         ROW 2 (Mobile only): Search bar pushed to next line
+                         On sm+ it sits between logo & buttons via flex order
+                         ═══════════════════════════════════════════════════════════ -->
+                    <div class="w-full order-3 sm:order-none sm:flex-1 sm:mx-4 sm:max-w-2xl mt-1 sm:mt-0">
                         <form action="{{ route('catalog.index') }}" method="GET" class="relative group" role="search" aria-label="جستجوی محصولات">
                             <label for="search-input" class="sr-only">جستجو در محصولات</label>
                             <div class="relative">
                                 <input type="text" name="q" placeholder="جستجو در محصولات، برندها و..."
-                                       class="w-full pl-14 pr-14 py-4 bg-gray-100/50 backdrop-blur-sm border-2 border-transparent rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 focus:bg-white transition-all duration-300 text-gray-700 placeholder-gray-400 shadow-inner hover:bg-gray-100 min-h-[48px]"
+                                       class="w-full pl-12 pr-12 py-3 sm:py-4 bg-gray-100/70 backdrop-blur-sm border-2 border-transparent rounded-full focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 focus:bg-white transition-all duration-300 text-gray-700 placeholder-gray-400 shadow-inner hover:bg-gray-100 min-h-[44px] text-sm sm:text-base"
                                        value="{{ request('q') }}"
                                        id="search-input"
                                        aria-label="جستجو در محصولات"
                                        title="جستجو در محصولات">
-                                <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-xl text-gray-400 hover:text-blue-500 transition-colors group-hover:scale-110" aria-label="جستجو">
-                                    <i class="ti ti-search text-xl"></i>
+                                <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full text-gray-400 hover:text-blue-500 transition-colors" aria-label="جستجو">
+                                    <i class="ti ti-search text-lg sm:text-xl"></i>
                                 </button>
-                                <button type="button" onclick="startVoiceSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-xl text-gray-400 hover:text-green-500 transition-colors" id="voice-btn" aria-label="جستجوی صوتی" title="جستجوی صوتی">
-                                    <i class="ti ti-microphone text-xl"></i>
+                                <button type="button" onclick="startVoiceSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full text-gray-400 hover:text-green-500 transition-colors" id="voice-btn" aria-label="جستجوی صوتی" title="جستجوی صوتی">
+                                    <i class="ti ti-microphone text-lg sm:text-xl"></i>
                                 </button>
                             </div>
 
@@ -867,27 +874,32 @@
                         </form>
                     </div>
 
-                    <!-- User Actions Section -->
-                    <div class="flex items-center space-x-2 rtl:space-x-reverse flex-shrink-0">
+                    <!-- User Actions Section (always stays in row 1, left side on mobile) -->
+                    <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 order-2 sm:order-none">
                         <!-- Compare -->
-                        <button onclick="showCompareModal()" class="w-12 h-12 min-h-[48px] min-w-[48px] bg-white hover:bg-purple-50 text-gray-600 hover:text-purple-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative group" aria-label="مقایسه محصولات">
-                            <i class="ti ti-git-compare text-xl"></i>
+                        <button onclick="showCompareModal()"
+                                class="w-10 h-10 sm:w-11 sm:h-11 bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative group"
+                                aria-label="مقایسه محصولات">
+                            <i class="ti ti-git-compare text-lg sm:text-xl"></i>
                             <span class="compare-count absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white hidden" id="compare-count">0</span>
                         </button>
 
                         <!-- Wishlist -->
-                        <button onclick="showWishlistModal()" class="w-12 h-12 min-h-[48px] min-w-[48px] bg-white hover:bg-red-50 text-gray-600 hover:text-red-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative group" aria-label="لیست علاقه‌مندی‌ها">
-                            <i class="ti ti-heart text-xl"></i>
+                        <button onclick="showWishlistModal()"
+                                class="w-10 h-10 sm:w-11 sm:h-11 bg-red-50 hover:bg-red-100 text-red-500 border border-red-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative group"
+                                aria-label="لیست علاقه‌مندی‌ها">
+                            <i class="ti ti-heart text-lg sm:text-xl"></i>
                             <span class="wishlist-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white hidden" id="wishlist-count">0</span>
                         </button>
 
                         <!-- Cart -->
                         <div class="relative group/cart" id="mini-cart-wrapper">
-                            <a href="{{ route('cart.index') }}" class="w-11 h-11 bg-white hover:bg-green-50 text-gray-600 hover:text-green-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-gray-100 relative">
-                                <i class="ti ti-shopping-cart text-xl"></i>
+                            <a href="{{ route('cart.index') }}"
+                               class="w-10 h-10 sm:w-11 sm:h-11 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative">
+                                <i class="ti ti-shopping-cart text-lg sm:text-xl"></i>
                                 <span class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white animate-bounce hidden" id="cart-count">0</span>
                             </a>
-                            
+
                             <!-- Mini Cart Dropdown -->
                             <div class="absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden opacity-0 invisible translate-y-2 group-hover/cart:opacity-100 group-hover/cart:visible group-hover/cart:translate-y-0 transition-all duration-300" id="mini-cart-dropdown">
                                 <div id="mini-cart-content">
@@ -959,12 +971,14 @@
 
                         <!-- User Profile/Login -->
                         @guest
-                            <div class="hidden lg:flex items-center space-x-2 rtl:space-x-reverse ml-2">
-                                <a href="{{ route('login') }}" class="px-5 py-2.5 text-gray-700 hover:text-blue-600 font-medium transition-colors">ورود</a>
-                                <a href="{{ route('register') }}" class="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-md hover:shadow-lg">ثبت نام</a>
+                            <div class="hidden sm:flex items-center gap-1 mr-1">
+                                <a href="{{ route('login') }}" class="px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm">ورود</a>
+                                <a href="{{ route('register') }}" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-md hover:shadow-lg text-sm">ثبت نام</a>
                             </div>
-                            <a href="{{ route('login') }}" class="lg:hidden w-12 h-12 min-h-[48px] min-w-[48px] bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-md" aria-label="ورود به حساب کاربری">
-                                <i class="ti ti-user text-xl"></i>
+                            <a href="{{ route('login') }}"
+                               class="sm:hidden w-10 h-10 bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-md border border-blue-400"
+                               aria-label="ورود به حساب کاربری">
+                                <i class="ti ti-user text-lg"></i>
                             </a>
                         @else
                             @php
@@ -973,13 +987,13 @@
                                     ->find(auth()->id());
                                 $shopUserIsStaff = $shopUser?->isEmployee() ?? false;
                             @endphp
-                            <div class="relative ml-2" id="shop-user-menu" data-shop-user-menu data-shop-user-id="{{ $shopUser?->id }}">
+                            <div class="relative mr-1" id="shop-user-menu" data-shop-user-menu data-shop-user-id="{{ $shopUser?->id }}">
                                 <button type="button"
                                         data-shop-user-menu-toggle
-                                        class="flex items-center space-x-2 rtl:space-x-reverse px-3 py-1.5 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                                        class="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                                         aria-expanded="false"
                                         aria-controls="shop-user-menu-panel">
-                                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shadow-sm">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
                                         <i class="ti ti-user text-white text-sm"></i>
                                     </div>
                                     <div class="hidden sm:flex flex-col items-start leading-tight">
@@ -1048,32 +1062,39 @@
                     </div>
                 </div>
 
-
-
-                <!-- Global Navigation Content -->
-                <nav class="flex items-center justify-between py-1 border-t border-gray-100 overflow-x-auto no-scrollbar gap-2 sm:gap-4 transition-all duration-300">
-                    <button onclick="toggleMobileNav()" class="flex-shrink-0 flex items-center space-x-1 sm:space-x-2 rtl:space-x-reverse px-2 py-1.5 sm:px-4 sm:py-2 bg-gray-50 hover:bg-gray-100 rounded-lg sm:rounded-xl text-gray-700 transition-all group">
-                        <i class="ti ti-menu-2 text-base sm:text-lg group-hover:scale-110 transition-transform"></i>
-                        <span class="text-xs sm:text-sm font-bold whitespace-nowrap">دسته‌بندی‌ها</span>
+                <!-- ═══════════════════════════════════════════════════════════════
+                     ROW 3: Global Navigation — justify-around on mobile, gap on sm+
+                     ═══════════════════════════════════════════════════════════════ -->
+                <nav class="flex items-center justify-around sm:justify-start sm:gap-6 py-1.5 border-t border-gray-100 transition-all duration-300">
+                    <!-- Categories Drawer Toggle -->
+                    <button onclick="toggleMobileNav()"
+                            class="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 sm:space-x-2 rtl:sm:space-x-reverse px-2 py-1.5 sm:px-4 sm:py-2 bg-gray-50 hover:bg-gray-100 rounded-xl text-gray-700 transition-all group flex-1 sm:flex-none justify-center">
+                        <i class="ti ti-menu-2 text-lg sm:text-base group-hover:scale-110 transition-transform"></i>
+                        <span class="text-[10px] sm:text-sm font-bold">دسته‌بندی‌ها</span>
                     </button>
-                    <div class="flex items-center space-x-3 sm:space-x-6 rtl:space-x-reverse whitespace-nowrap flex-1 px-2 sm:px-4">
-                        <a href="{{ route('home') }}" class="flex items-center text-xs sm:text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors py-1">
-                            <i class="ti ti-home ml-1 sm:ml-1.5 text-base sm:text-lg"></i>
-                            <span>صفحه اصلی</span>
-                        </a>
-                        <a href="{{ route('catalog.index') }}" class="flex items-center text-xs sm:text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors py-1">
-                            <i class="ti ti-layout-grid ml-1 sm:ml-1.5 text-base sm:text-lg"></i>
-                            <span>محصولات</span>
-                        </a>
-                        <a href="{{ route('catalog.index', ['on_sale' => 1]) }}" class="flex items-center text-xs sm:text-sm font-bold text-red-700 hover:text-red-800 transition-colors py-1">
-                            <i class="ti ti-discount ml-1 sm:ml-1.5 text-base sm:text-lg"></i>
-                            <span>تخفیف‌ها</span>
-                        </a>
-                        <a href="{{ route('tracking.index') }}" class="flex items-center text-xs sm:text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors py-1">
-                            <i class="ti ti-truck-delivery ml-1 sm:ml-1.5 text-base sm:text-lg"></i>
-                            <span>پیگیری</span>
-                        </a>
-                    </div>
+                    <a href="{{ route('home') }}"
+                       class="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 text-gray-600 hover:text-blue-600 transition-colors py-1.5 flex-1 sm:flex-none justify-center">
+                        <i class="ti ti-home text-lg sm:text-base"></i>
+                        <span class="text-[10px] sm:text-sm font-bold">صفحه اصلی</span>
+                    </a>
+
+                    <a href="{{ route('catalog.index') }}"
+                       class="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 text-gray-600 hover:text-blue-600 transition-colors py-1.5 flex-1 sm:flex-none justify-center">
+                        <i class="ti ti-layout-grid text-lg sm:text-base"></i>
+                        <span class="text-[10px] sm:text-sm font-bold">محصولات</span>
+                    </a>
+
+                    <a href="{{ route('catalog.index', ['on_sale' => 1]) }}"
+                       class="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 text-red-700 hover:text-red-800 transition-colors py-1.5 flex-1 sm:flex-none justify-center">
+                        <i class="ti ti-discount text-lg sm:text-base"></i>
+                        <span class="text-[10px] sm:text-sm font-bold">تخفیف‌ها</span>
+                    </a>
+
+                    <a href="{{ route('tracking.index') }}"
+                       class="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5 text-gray-600 hover:text-blue-600 transition-colors py-1.5 flex-1 sm:flex-none justify-center">
+                        <i class="ti ti-truck-delivery text-lg sm:text-base"></i>
+                        <span class="text-[10px] sm:text-sm font-bold">پیگیری</span>
+                    </a>
                 </nav>
             </div>
         </div>
@@ -1282,8 +1303,25 @@
                 </div>
             </div>
 
+            @php
+                $siteLicenses = json_decode(\App\Models\Setting::get('site_licenses', '[]'), true);
+                if (!is_array($siteLicenses)) $siteLicenses = [];
+            @endphp
+            @if(count($siteLicenses) > 0)
+            <div class="mt-12 pt-8 border-t border-white/20">
+                <h4 class="text-lg font-semibold text-white mb-6 text-center">مجوزهای نماد اعتماد و ساماندهی</h4>
+                <div class="flex flex-wrap justify-center gap-6">
+                    @foreach($siteLicenses as $license)
+                        <a href="{{ $license['url'] }}" target="_blank" rel="noopener noreferrer" class="bg-white/10 hover:bg-white/20 border border-white/20 p-3 rounded-2xl transition-all hover:scale-105 inline-block">
+                            <img src="{{ asset($license['image']) }}" alt="License" class="h-24 w-auto object-contain drop-shadow-md bg-white rounded-xl p-1">
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
             <!-- Bottom Section -->
-            <div class="border-t border-white/20 mt-12 pt-8">
+            <div class="border-t border-white/20 mt-8 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                     <div class="text-center md:text-right">
                         <p class="text-gray-400 text-sm">

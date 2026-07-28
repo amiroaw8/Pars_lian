@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="{{ config('app.viewport') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="پنل مدیریت یکپارچه پارس لیان">
     @auth
     <meta name="money-words-url" content="{{ route('automation.money.words') }}">
     @endauth
@@ -21,9 +22,7 @@
     <!-- Fonts & Icons -->
     <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
-    
-    <link rel="preload" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}"></noscript>
+    @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
     <!-- Favicon -->
@@ -47,7 +46,13 @@
 
     html {
         height: 100%;
-        overflow: hidden;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        margin: 0;
+        overflow-x: hidden;
     }
 
     .admin-layout {
@@ -57,20 +62,22 @@
         color: #0f172a;
         margin: 0;
         height: 100%;
-        overflow: hidden !important;
+        width: 100%;
+        overflow-x: hidden;
+        position: relative;
     }
 
     /* Shell fills viewport below fixed header */
     .admin-wrapper {
-        position: fixed;
+        position: relative;
         top: var(--admin-header-height);
         left: 0;
         right: 0;
-        bottom: 0;
-        display: flex;
         width: 100%;
-        min-height: 0;
-        overflow: hidden;
+        min-height: calc(100vh - var(--admin-header-height));
+        display: flex;
+        overflow-x: hidden;
+        overflow-y: auto;
         z-index: 1;
         background-color: var(--bg-body);
     }
@@ -117,7 +124,8 @@
         width: var(--sidebar-width);
         background: #1e293b;
         border-left: 1px solid rgba(255,255,255,0.1);
-        overflow-y: scroll;
+        overflow-y: auto;
+        overflow-x: hidden;
         scrollbar-gutter: stable;
         display: flex;
         flex-direction: column;
@@ -127,6 +135,7 @@
         right: calc(var(--sidebar-width) * -1);
         top: var(--admin-header-height);
         bottom: 0;
+        height: calc(100vh - var(--admin-header-height));
     }
 
     .admin-sidebar.open {
@@ -235,26 +244,38 @@
     .admin-main {
         flex: 1 1 auto;
         width: 100%;
-        min-height: 0;
-        max-height: 100%;
-        overflow-y: scroll;
+        min-width: 0;
+        max-width: 100%;
+        min-height: calc(100vh - var(--admin-header-height));
         overflow-x: hidden;
-        scrollbar-gutter: stable;
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
+        overflow-y: visible;
         background-color: var(--bg-body);
     }
 
     body.admin-layout.sidebar-open .admin-main {
-        overflow: hidden;
+        overflow-x: hidden;
     }
 
     .admin-content {
-        padding: 1.25rem 1.5rem 2rem;
-        max-width: 1400px;
+        padding: 0.75rem 0.75rem 2rem;
+        max-width: 100%;
         margin: 0 auto;
         width: 100%;
         box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    @media (min-width: 640px) {
+        .admin-content {
+            padding: 1rem 1.5rem 2rem;
+            max-width: 1400px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .admin-content {
+            padding: 1.25rem 1.5rem 2rem;
+        }
     }
 
     .admin-content .min-h-\[calc\(100vh-12rem\)\] {
@@ -415,7 +436,7 @@
         <div class="header-container">
             <!-- Logo & Toggle -->
             <div class="flex items-center gap-4">
-                <button class="p-2 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg transition-colors" id="navToggle">
+                <button class="p-2 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg transition-colors" id="navToggle" aria-label="باز و بسته کردن منو">
                     <i class="ti ti-menu-2 text-2xl"></i>
                 </button>
                 <a href="{{ $dashboardRoute }}" class="admin-logo">

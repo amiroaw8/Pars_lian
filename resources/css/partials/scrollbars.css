@@ -1,9 +1,5 @@
 /* Always-visible vertical scrollbar on the RIGHT (RTL content, LTR scroll track) */
 
-html {
-    scrollbar-width: thin;
-}
-
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;

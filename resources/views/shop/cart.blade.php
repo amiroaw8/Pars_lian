@@ -25,7 +25,7 @@
                     <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
                         <div class="divide-y divide-gray-100">
                             @foreach($cart->items as $item)
-                                <div class="p-8 flex flex-col sm:flex-row items-center gap-8 group transition-all hover:bg-gray-50/50 cart-item-row">
+                                <div class="p-4 sm:p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-8 group transition-all hover:bg-gray-50/50 cart-item-row">
                                     <!-- Product Image -->
                                     <div class="w-32 h-32 bg-gray-50 rounded-2xl overflow-hidden flex-shrink-0 border border-gray-100">
                                         <img loading="lazy" src="{{ $item->product->main_image_url }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">

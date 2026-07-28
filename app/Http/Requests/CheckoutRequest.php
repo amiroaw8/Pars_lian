@@ -29,6 +29,7 @@ class CheckoutRequest extends FormRequest
             ],
             'shipping_method' => ['required', 'in:tipax,dekapost,snapp,pickup'],
             'payment_method' => ['required', 'in:cod,online'],
+            'payment_gateway' => ['nullable', 'string'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }
@@ -60,6 +61,7 @@ class CheckoutRequest extends FormRequest
             'shipping_postal_code' => 'کد پستی',
             'shipping_method' => 'روش ارسال',
             'payment_method' => 'روش پرداخت',
+            'payment_gateway' => 'درگاه پرداخت آنلاین',
         ];
     }
 }

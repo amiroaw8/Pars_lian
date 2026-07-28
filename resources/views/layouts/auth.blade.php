@@ -8,7 +8,7 @@
 
     <!-- Fonts & Icons -->
     <link href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/tabler-icons/tabler-icons.min.css') }}" rel="stylesheet">
+    @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
     <style>
@@ -177,17 +177,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 640px) {
-            .auth-card-modern {
-                padding: 2rem 1.25rem;
-                border-radius: 1.5rem;
-                margin: 1rem;
-            }
 
-            .auth-wrapper {
-                padding: 1rem;
-            }
-        }
     </style>
     @yield('styles')
 </head>

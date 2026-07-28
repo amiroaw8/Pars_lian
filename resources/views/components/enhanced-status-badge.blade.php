@@ -41,7 +41,23 @@ unset($__defined_vars, $__key, $__value); ?>
 <?php
     // تعریف وضعیت‌ها و variantهای مربوطه
     $statusConfig = [
-        // وضعیت‌های سفارش
+        // وضعیت‌های سفارش فروشگاهی
+        'pending' => [
+            'label' => 'در انتظار بررسی',
+            'variant' => 'warning',
+            'icon' => 'clock'
+        ],
+        'processing' => [
+            'label' => 'در حال پردازش',
+            'variant' => 'info-solid',
+            'icon' => 'loader'
+        ],
+        'shipped' => [
+            'label' => 'ارسال شده',
+            'variant' => 'indigo-solid',
+            'icon' => 'truck'
+        ],
+        // وضعیت‌های سفارش تعمیر
         'registered' => [
             'label' => 'ثبت شده',
             'variant' => 'info-solid',

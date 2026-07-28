@@ -26,7 +26,7 @@ class Order extends Model
     protected $fillable = [
         'order_number', 'user_id', 'service_order_id', 'status', 'subtotal', 'tax_amount', 
         'shipping_amount', 'shipping_method', 'discount_amount', 'total', 'currency', 
-        'payment_status', 'payment_method', 'notes', 'shipping_first_name', 
+        'payment_status', 'payment_method', 'payment_gateway', 'notes', 'shipping_first_name', 
         'shipping_last_name', 'shipping_email', 'shipping_phone', 
         'shipping_address', 'shipping_city', 'shipping_state', 
         'shipping_postal_code', 'shipping_country', 'billing_first_name', 

@@ -284,22 +284,21 @@
                 </x-enhanced-card>
 
                 <!-- Help Card -->
-                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl animate-slide-up group" style="animation-delay: 0.2s">
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl animate-slide-up group" style="animation-delay: 0.8s">
                     <div class="relative z-10">
-                        <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                            <i class="ti ti-help text-3xl"></i>
+                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 group-hover:bg-white group-hover:text-blue-600 transition-all duration-500">
+                            <i class="ti ti-headset text-2xl"></i>
                         </div>
-                        <h4 class="text-xl font-black mb-3">سوالات متداول</h4>
-                        <p class="text-blue-100 text-sm font-medium leading-relaxed mb-8 opacity-80">در صورتی که در مورد وضعیت سفارش خود سوالی دارید، می‌توانید بخش راهنما را مطالعه کنید.</p>
-                        <a href="{{ route('tracking.index') }}" class="btn-modern bg-white text-blue-600 w-full py-4 shadow-xl hover:bg-blue-50">
-                            <span>مرکز راهنمایی</span>
-                            <i class="ti ti-external-link"></i>
+                        <h4 class="text-xl font-black mb-2">نیاز به راهنمایی دارید؟</h4>
+                        <p class="text-slate-400 text-sm font-medium mb-8 leading-relaxed">کارشناسان ما آماده پاسخگویی به سوالات شما در مورد وضعیت سفارشات هستند.</p>
+                        <a href="tel:06633308603" class="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 transition-colors group/link">
+                            <span class="font-black text-lg" dir="ltr">066 - 33308603</span>
+                            <div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center group-hover/link:scale-110 transition-transform">
+                                <i class="ti ti-phone-call"></i>
+                            </div>
                         </a>
                     </div>
-                    
-                    <!-- Decorative Elements -->
-                    <div class="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-white/20 transition-colors"></div>
-                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-blue-400/20 rounded-full translate-y-1/3 -translate-x-1/3 blur-2xl"></div>
+                    <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
                 </div>
             </div>
         </div>

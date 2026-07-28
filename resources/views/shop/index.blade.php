@@ -1,6 +1,6 @@
 @extends('layouts.shop')
 
-@section('title', 'فروشگاه پارس لیان - بهترین قطعات کامپیوتر')
+@section('title', 'فروشگاه پارس لیان | خرید و تعمیرات تخصصی قطعات کامپیوتر')
 
 @section('shop-content')
     <div class="bg-white min-h-screen font-vazir">
@@ -35,24 +35,24 @@
                             </span>
                             مرکز تخصصی سخت‌افزار پارس لیان
                         </div>
-                        <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
                             <span class="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 to-cyan-300">تکنولوژی</span>
                             به شایستگی شما
-                        </h1>
+                        </h2>
                         <p class="text-xl text-slate-400 mb-10 leading-relaxed max-w-xl">
                             تأمین بهترین قطعات کامپیوتر با گارانتی معتبر و ارائه خدمات تخصصی تعمیرات با پیشرفته‌ترین تجهیزات
                             روز دنیا.
                         </p>
                         <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
-                            <a href="{{ route('tracking.index') }}"
-                                class="btn-modern btn-primary py-4 px-10 rounded-2xl shadow-xl shadow-blue-500/20">
-                                <i class="ti ti-search text-xl"></i>
-                                رهگیری سریع سفارش
-                            </a>
                             <a href="{{ route('catalog.index') }}"
-                                class="px-10 py-4 rounded-2xl font-bold text-white bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-all flex items-center gap-2 group">
-                                <i class="ti ti-shopping-cart text-xl group-hover:scale-110 transition-transform"></i>
+                                class="btn-modern btn-primary py-4 px-10 rounded-2xl shadow-xl shadow-blue-500/20">
+                                <i class="ti ti-shopping-cart text-xl"></i>
                                 مشاهده محصولات
+                            </a>
+                            <a href="{{ route('tracking.index') }}"
+                                class="px-10 py-4 rounded-2xl font-bold text-white bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-all flex items-center gap-2 group">
+                                <i class="ti ti-search text-xl group-hover:scale-110 transition-transform"></i>
+                                رهگیری سریع سفارش
                             </a>
                         </div>
 
@@ -113,7 +113,7 @@
                 class="bg-white/90 backdrop-blur-2xl rounded-[3rem] border border-white/50 shadow-2xl shadow-slate-200/50 overflow-hidden">
                 <div
                     class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-slate-100">
-                    <div class="flex items-center p-10 group hover:bg-blue-50/50 transition-all duration-500">
+                    <div class="flex items-center p-6 md:p-10 group hover:bg-blue-50/50 transition-all duration-500">
                         <div
                             class="w-16 h-16 bg-blue-100/50 text-blue-600 rounded-[1.5rem] flex items-center justify-center ml-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm border border-blue-200/50">
                             <i class="ti ti-cpu text-3xl"></i>
@@ -123,7 +123,7 @@
                             <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">با پیشرفته‌ترین تجهیزات روز دنیا</p>
                         </div>
                     </div>
-                    <div class="flex items-center p-10 group hover:bg-indigo-50/50 transition-all duration-500">
+                    <div class="flex items-center p-6 md:p-10 group hover:bg-indigo-50/50 transition-all duration-500">
                         <div
                             class="w-16 h-16 bg-indigo-100/50 text-indigo-600 rounded-[1.5rem] flex items-center justify-center ml-6 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 shadow-sm border border-indigo-200/50">
                             <i class="ti ti-components text-3xl"></i>
@@ -133,7 +133,7 @@
                             <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">تضمین ۱۰۰٪ اصالت و کیفیت</p>
                         </div>
                     </div>
-                    <div class="flex items-center p-10 group hover:bg-emerald-50/50 transition-all duration-500">
+                    <div class="flex items-center p-6 md:p-10 group hover:bg-emerald-50/50 transition-all duration-500">
                         <div
                             class="w-16 h-16 bg-emerald-100/50 text-emerald-600 rounded-[1.5rem] flex items-center justify-center ml-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm border border-emerald-200/50">
                             <i class="ti ti-rocket text-3xl"></i>
@@ -149,7 +149,7 @@
 
         <!-- Featured / Products sections continue below -->
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
             <!-- Featured Products -->
             @if($featuredProducts->count() > 0)
                 <section class="mb-24">
@@ -169,7 +169,7 @@
                         </a>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                         @forelse($featuredProducts as $product)
                             <div class="group bg-white rounded-[2.5rem] border border-slate-100 p-4 hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500 animate-slide-up"
                                 style="--delay: {{ $loop->index * 0.1 }}s; animation-delay: var(--delay);">
@@ -241,7 +241,7 @@
             @endif
 
             <!-- Why Us Section (Trust Signals) -->
-            <div class="bg-slate-50 py-24 relative overflow-hidden">
+            <div class="bg-slate-50 py-12 md:py-24 relative overflow-hidden">
                 <div
                     class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent">
                 </div>
@@ -349,14 +349,14 @@
 
 
             <!-- Trust Badges Section -->
-            <section class="py-24 border-t border-slate-100 mt-12">
+            <section class="py-12 md:py-24 border-t border-slate-100 mt-8 md:mt-12">
                 <div class="text-center mb-16 animate-fade-in">
                     <h2 class="text-4xl font-black text-slate-900 mb-4">اطمینان در خرید، تخصص در خدمات</h2>
                     <p class="text-slate-500 text-lg max-w-2xl mx-auto">ما در پارس لیان متعهد هستیم که بهترین تجربه را برای
                         شما رقم بزنیم.</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
                     <div class="group text-center">
                         <div
                             class="w-24 h-24 bg-blue-50 text-blue-600 rounded-[2rem] flex items-center justify-center mx-auto mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 group-hover:-translate-y-2 shadow-sm border border-blue-100">

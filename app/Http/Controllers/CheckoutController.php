@@ -43,7 +43,9 @@ class CheckoutController extends Controller
             }
         }
 
-        return view('shop.checkout', compact('cart'));
+        $activeGateways = \App\Services\Payment\PaymentGatewayManager::getActiveGateways();
+
+        return view('shop.checkout', compact('cart', 'activeGateways'));
     }
 
     public function store(CheckoutRequest $request)
@@ -83,11 +85,16 @@ class CheckoutController extends Controller
                     }
                 }
 
+                $paymentGateway = $request->payment_method === 'online'
+                    ? ($request->payment_gateway ?: \App\Services\Payment\PaymentGatewayManager::getSettings()['default'])
+                    : null;
+
                 $newOrder = $cart->convertToOrder([
                     'user_id' => Auth::id(),
                     'status' => OrderStatus::PENDING,
                     'payment_status' => PaymentStatus::PENDING,
                     'payment_method' => $request->payment_method,
+                    'payment_gateway' => $paymentGateway,
                     'currency' => config('shop.currency', 'IRT'),
                     'notes' => $request->notes,
                     'shipping_first_name' => $request->shipping_first_name,

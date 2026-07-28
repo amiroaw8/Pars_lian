@@ -132,11 +132,30 @@
             </div>
         </div>
 
+        <!-- دکمه مشاهده سفارشات -->
+        <div class="animate-slide-up" style="animation-delay: 0.45s">
+            <a href="{{ route('customer.orders') }}" class="flex items-center justify-between w-full p-5 bg-gradient-to-l from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-[2rem] shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                        <i class="ti ti-list-details text-2xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-black text-lg">مشاهده همه سفارشات</div>
+                        <div class="text-blue-200 text-xs font-medium">تعمیرات و خریدهای فروشگاه</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-black">{{ $stats['total_repair_orders'] + $stats['total_shop_orders'] }} سفارش</span>
+                    <i class="ti ti-arrow-left text-xl group-hover:-translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Recent Activity Sections -->
             <div class="lg:col-span-2 space-y-8">
                 <!-- Recent Shop Orders -->
-                <x-enhanced-card title="آخرین خریدهای فروشگاه" icon="shopping-cart" class="animate-slide-up" style="animation-delay: 0.5s">
+                <x-enhanced-card title="سه خرید آخر فروشگاه" icon="shopping-cart" class="animate-slide-up" style="animation-delay: 0.5s">
                     <x-slot name="actions">
                         <a href="{{ route('customer.orders') }}" class="btn-modern btn-modern-light py-2 px-4 text-sm group">
                             <span>مشاهده همه</span>
@@ -149,19 +168,36 @@
                             <thead>
                                 <tr class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">
                                     <th class="px-4 py-2">شماره سفارش</th>
-                                    <th class="px-4 py-2">وضعیت</th>
+                                    <th class="px-4 py-2">وضعیت سفارش</th>
+                                    <th class="px-4 py-2">وضعیت پرداخت</th>
                                     <th class="px-4 py-2 text-center">مبلغ</th>
                                     <th class="px-4 py-2 text-center">عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($shopOrders as $order)
+                                @forelse($shopOrders->take(3) as $order)
                                 <tr class="group hover:bg-slate-50/80 transition-all duration-300">
                                     <td class="px-4 py-4 first:rounded-r-2xl bg-white group-hover:bg-transparent transition-colors">
                                         <span class="font-black text-slate-900 bg-slate-100 px-3 py-1.5 rounded-xl group-hover:bg-white transition-colors"><x-hash-ref :value="$order->order_number" /></span>
                                     </td>
                                     <td class="px-4 py-4 bg-white group-hover:bg-transparent transition-colors">
                                         <x-enhanced-status-badge :status="$order->status->value ?? $order->status" size="xs" />
+                                    </td>
+                                    <td class="px-4 py-4 bg-white group-hover:bg-transparent transition-colors">
+                                        @php
+                                            $paymentVariant = match($order->payment_status->value ?? $order->payment_status) {
+                                                'paid'     => 'success-solid',
+                                                'failed'   => 'danger',
+                                                'refunded' => 'secondary',
+                                                default    => 'warning',
+                                            };
+                                        @endphp
+                                        <x-enhanced-status-badge
+                                            :status="$order->payment_status->value ?? $order->payment_status"
+                                            :label="$order->payment_status->label()"
+                                            :variant="$paymentVariant"
+                                            size="xs"
+                                        />
                                     </td>
                                     <td class="px-4 py-4 text-center bg-white group-hover:bg-transparent transition-colors">
                                         <div class="text-sm font-black text-emerald-600">{{ number_format($order->total) }}</div>
@@ -173,15 +209,16 @@
                                     </td>
                                 </tr>
                                 @empty
-                                <tr><td colspan="4" class="py-8 text-center text-slate-400 text-xs">خرید جدیدی ثبت نشده است.</td></tr>
+                                <tr><td colspan="5" class="py-8 text-center text-slate-400 text-xs">خرید جدیدی ثبت نشده است.</td></tr>
                                 @endforelse
+
                             </tbody>
                         </table>
                     </div>
                 </x-enhanced-card>
 
                 <!-- Recent Repair Orders -->
-                <x-enhanced-card title="آخرین سفارشات تعمیرات" icon="tool" class="animate-slide-up" style="animation-delay: 0.6s">
+                <x-enhanced-card title="سه سفارش آخر تعمیرات" icon="tool" class="animate-slide-up" style="animation-delay: 0.6s">
                     <x-slot name="actions">
                         <a href="{{ route('customer.orders') }}" class="btn-modern btn-modern-light py-2 px-4 text-sm group">
                             <span>مشاهده همه</span>
@@ -200,7 +237,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($repairOrders as $order)
+                                @forelse($repairOrders->take(3) as $order)
                                 <tr class="group hover:bg-slate-50/80 transition-all duration-300">
                                     <td class="px-4 py-4 first:rounded-r-2xl bg-white group-hover:bg-transparent transition-colors">
                                         <span class="font-black text-slate-900 bg-slate-100 px-3 py-1.5 rounded-xl group-hover:bg-white transition-colors"><x-hash-ref :value="$order->id" /></span>
@@ -263,7 +300,7 @@
                         <h4 class="text-xl font-black mb-2">نیاز به راهنمایی دارید؟</h4>
                         <p class="text-slate-400 text-sm font-medium mb-8 leading-relaxed">کارشناسان ما آماده پاسخگویی به سوالات شما در مورد وضعیت سفارشات هستند.</p>
                         <a href="tel:06633308603" class="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 transition-colors group/link">
-                            <span class="font-black text-lg dir-ltr">066 - 33308603</span>
+                            <span class="font-black text-lg" dir="ltr">066 - 33308603</span>
                             <div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center group-hover/link:scale-110 transition-transform">
                                 <i class="ti ti-phone-call"></i>
                             </div>

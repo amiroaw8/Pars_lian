@@ -164,14 +164,14 @@
                             روش پرداخت
                         </h2>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                             <label class="checkout-choice group relative flex flex-col p-6 border-2 rounded-[1.5rem] cursor-pointer transition-all hover:bg-gray-50 border-gray-100">
                                 <input type="radio" name="payment_method" value="online" class="sr-only" {{ old('payment_method', 'online') !== 'cod' ? 'checked' : '' }}>
                                 <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-has-[:checked]:bg-blue-600 group-has-[:checked]:text-white transition-colors">
                                     <i class="ti ti-credit-card text-2xl"></i>
                                 </div>
                                 <span class="font-black text-gray-900">پرداخت آنلاین</span>
-                                <span class="text-xs text-gray-400 mt-1">درگاه پرداخت بانکی</span>
+                                <span class="text-xs text-gray-400 mt-1">درگاه پرداخت شتاب</span>
                                 <div class="checkout-choice-check absolute top-4 left-4 text-blue-600 transition-opacity">
                                     <i class="ti ti-circle-check-filled text-xl"></i>
                                 </div>
@@ -188,6 +188,40 @@
                                     <i class="ti ti-circle-check-filled text-xl"></i>
                                 </div>
                             </label>
+                        </div>
+
+                        <!-- Sub-options for active online payment gateways -->
+                        <div id="onlineGatewayContainer" class="pt-6 border-t border-gray-100">
+                            <p class="text-xs font-bold text-gray-700 mb-3 flex items-center gap-2">
+                                <i class="ti ti-building-bank text-blue-600 text-base"></i>
+                                انتخاب درگاه پرداخت آنلاین:
+                            </p>
+                            <div class="flex flex-col gap-3">
+                                @foreach($activeGateways ?? [] as $gatewayKey => $gateway)
+                                    @php
+                                        $isChecked = (old('payment_gateway') === $gatewayKey) || (!old('payment_gateway') && !empty($gateway['is_default']));
+                                    @endphp
+                                    <label class="gateway-option-label flex items-center gap-4 p-4 border-2 rounded-2xl cursor-pointer transition-all duration-200 bg-white {{ $isChecked ? 'border-blue-600 bg-blue-50/60 shadow-md shadow-blue-100' : 'border-gray-200 hover:border-blue-300' }}">
+                                        <input type="radio" name="payment_gateway" value="{{ $gatewayKey }}" class="gateway-radio sr-only" {{ $isChecked ? 'checked' : '' }}>
+
+                                        <!-- Icon -->
+                                        <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors {{ $isChecked ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500' }} gateway-icon">
+                                            <i class="{{ $gateway['icon'] ?? 'ti ti-credit-card' }} text-xl"></i>
+                                        </div>
+
+                                        <!-- Name & description -->
+                                        <div class="flex-1 min-w-0">
+                                            <span class="block text-sm font-black text-gray-900 leading-tight">{{ $gateway['name'] }}</span>
+                                            <span class="block text-[11px] text-gray-500 mt-0.5 leading-snug">{{ $gateway['description'] ?? 'پرداخت آنلاین' }}</span>
+                                        </div>
+
+                                        <!-- Check indicator -->
+                                        <div class="gateway-check-icon shrink-0 transition-opacity {{ $isChecked ? 'opacity-100 text-blue-600' : 'opacity-0 text-blue-600' }}">
+                                            <i class="ti ti-circle-check-filled text-2xl"></i>
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -333,8 +367,57 @@
         if (postalOptionalNote) {
             postalOptionalNote.classList.toggle('hidden', !isPickup);
         }
+        const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
+        const onlineGatewayContainer = document.getElementById('onlineGatewayContainer');
+        if (onlineGatewayContainer) {
+            onlineGatewayContainer.style.display = selectedPaymentMethod === 'online' ? 'block' : 'none';
+        }
+
         syncCheckoutChoices();
     }
+
+    document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+        radio.addEventListener('change', updatePaymentAndPostalRules);
+    });
+
+    // --- Gateway selection visual sync ---
+    function syncGatewayChoices() {
+        document.querySelectorAll('.gateway-option-label').forEach(function(label) {
+            const radio = label.querySelector('.gateway-radio');
+            const iconBox = label.querySelector('.gateway-icon');
+            const checkIcon = label.querySelector('.gateway-check-icon');
+
+            if (!radio) return;
+
+            if (radio.checked) {
+                // Active selected state
+                label.classList.add('border-blue-600', 'shadow-md', 'shadow-blue-100');
+                label.classList.remove('border-gray-200', 'hover:border-blue-300');
+                label.style.backgroundColor = 'rgba(239,246,255,0.7)';
+                if (iconBox) {
+                    iconBox.classList.add('bg-blue-600', 'text-white');
+                    iconBox.classList.remove('bg-gray-100', 'text-gray-500');
+                }
+                if (checkIcon) checkIcon.classList.replace('opacity-0', 'opacity-100');
+            } else {
+                // Deselected state
+                label.classList.remove('border-blue-600', 'shadow-md', 'shadow-blue-100');
+                label.classList.add('border-gray-200', 'hover:border-blue-300');
+                label.style.backgroundColor = '';
+                if (iconBox) {
+                    iconBox.classList.remove('bg-blue-600', 'text-white');
+                    iconBox.classList.add('bg-gray-100', 'text-gray-500');
+                }
+                if (checkIcon) checkIcon.classList.replace('opacity-100', 'opacity-0');
+            }
+        });
+    }
+
+    document.querySelectorAll('.gateway-radio').forEach(radio => {
+        radio.addEventListener('change', syncGatewayChoices);
+    });
+    // Run once on load to apply server-side checked state
+    syncGatewayChoices();
 
     function onShippingChange() {
         updateCheckoutShippingLabel();

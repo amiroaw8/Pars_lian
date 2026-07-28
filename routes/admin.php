@@ -30,6 +30,9 @@ Route::prefix('panel')->name('admin.')->middleware([...$panelMiddleware, 'role:a
     Route::put('/settings/sms', [\App\Http\Controllers\SettingController::class, 'updateSmsTemplates'])->name('settings.update-sms');
     Route::put('/settings/security', [\App\Http\Controllers\SettingController::class, 'updateSecurity'])->name('settings.update-security');
     Route::put('/settings/service', [\App\Http\Controllers\SettingController::class, 'updateService'])->name('settings.update-service');
+    Route::put('/settings/payment-gateways', [\App\Http\Controllers\SettingController::class, 'updatePaymentGateways'])->name('settings.update-payment-gateways');
+    Route::post('/settings/licenses', [\App\Http\Controllers\SettingController::class, 'addLicense'])->name('settings.add-license');
+    Route::delete('/settings/licenses/{index}', [\App\Http\Controllers\SettingController::class, 'removeLicense'])->name('settings.remove-license');
 
     // مدیریت سطوح دسترسی پیشرفته
     Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-logs.index');

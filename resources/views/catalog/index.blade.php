@@ -108,7 +108,7 @@
         display: flex;
         flex-direction: column;
         min-height: 26rem;
-        overflow: visible;
+        overflow: hidden;
         border-color: var(--catalog-frame-border) !important;
     }
 
@@ -135,6 +135,7 @@
     #products .catalog-product-card__title {
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         min-height: 2.75rem;
@@ -384,12 +385,12 @@
                     <div class="flex items-center gap-6">
                         <div class="text-right">
                             <p class="text-white font-black text-xl md:text-2xl tracking-tighter">15K+</p>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-0.5">قطعات موجود</p>
+                            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-0.5">قطعات موجود</p>
                         </div>
                         <div class="w-px h-10 bg-white/10"></div>
                         <div class="text-right">
                             <p class="text-white font-black text-xl md:text-2xl tracking-tighter">100%</p>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-0.5">تضمین اصالت</p>
+                            <p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest mt-0.5">تضمین اصالت</p>
                         </div>
                     </div>
                     
@@ -416,7 +417,7 @@
                                     <i class="ti ti-device-desktop-analytics text-lg text-white"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg md:text-xl font-black text-white leading-snug">پایداری مطلق در اوج سرعت</h3>
+                                    <h2 class="text-lg md:text-xl font-black text-white leading-snug">پایداری مطلق در اوج سرعت</h2>
                                     <p class="text-gray-400 text-xs leading-relaxed mt-1.5">انتخاب حرفه‌ای‌ها برای رندرینگ، گیمینگ و هوش مصنوعی.</p>
                                 </div>
                             </div>
@@ -462,7 +463,7 @@
                             <i class="ti ti-adjustments-horizontal ml-3 text-blue-600"></i>
                             فیلترها
                         </h2>
-                        <button id="closeFilters" class="w-10 h-10 bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-300 flex items-center justify-center">
+                        <button id="closeFilters" aria-label="بستن فیلترها" class="w-10 h-10 bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-300 flex items-center justify-center">
                             <i class="ti ti-x text-xl"></i>
                         </button>
                     </div>
@@ -566,7 +567,7 @@
                                     مرتب‌سازی
                                 </h3>
                                 <div class="relative">
-                                    <select name="sort" onchange="this.form.submit()"
+                                    <select name="sort" onchange="this.form.submit()" aria-label="مرتب‌سازی"
                                             class="catalog-filter-select">
                                         <option value="newest" {{ request('sort', 'newest') == 'newest' ? 'selected' : '' }}>جدیدترین</option>
                                         <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>ارزان‌ترین</option>
@@ -617,7 +618,7 @@
                 @if($products->count() > 0)
                 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
                     @foreach($products as $product)
-                    <div class="fade-in-stagger group relative product-card catalog-product-card bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 flex flex-col h-full">
+                    <div class="fade-in-stagger group relative product-card catalog-product-card bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
                         <div class="absolute top-5 right-5 z-10 flex flex-col gap-2">
                             @if($product->is_featured)
                             <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-blue-200">پیشنهادی</span>
@@ -637,7 +638,7 @@
                             <img loading="lazy" src="{{ $product->main_image_url }}"
                                  alt="{{ $product->name }}"
                                  class="absolute inset-0 z-[1] w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-700 ease-out"
-                                 onerror="this.onerror=null;this.src='{{ asset('images/no-image.svg') }}';">
+                                 onerror="this.onerror=null;this.src='<?php echo asset('images/no-image.svg'); ?>';">
 
                             <div class="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                                 <div class="absolute inset-0 bg-blue-600/5 pointer-events-none"></div>

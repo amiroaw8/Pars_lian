@@ -13,6 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10",
         "morilog/jalali": "^3.5.0",
+        "shetabit/payment": "^6.4",
         "spatie/laravel-permission": "^6.0"
     },
     "require-dev": {

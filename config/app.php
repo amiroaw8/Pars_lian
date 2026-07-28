@@ -59,10 +59,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Viewport (desktop-first on mobile)
+    | Viewport (responsive mobile-first)
     |--------------------------------------------------------------------------
     */
-    'viewport' => env('APP_VIEWPORT', 'width=1280, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes'),
+    'viewport' => env('APP_VIEWPORT', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes'),
 
     'desktop_min_width' => (int) env('APP_DESKTOP_MIN_WIDTH', 1280),
 

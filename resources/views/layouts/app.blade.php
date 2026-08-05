@@ -33,8 +33,10 @@
     <title>@yield('title', 'پارس لیان - سیستم مدیریت خدمات')</title>
 
     <!-- Fonts & Icons -->
-    <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn-Medium.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}">
     @include('partials.tabler-icons-assets')
 
     <!-- Critical CSS inline — prevents FOUC while app.css loads async -->

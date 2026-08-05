@@ -40,8 +40,11 @@
 
     <!-- Logo Preloads -->
     @if(\App\Support\BrandLogo::exists())
-        <link rel="preload" href="{{ asset('images/pars-lian-logo-mobile.webp') }}?v={{ file_exists(public_path('images/pars-lian-logo-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-mobile.webp')) : '' }}" as="image" type="image/webp" media="(max-width: 639px)" fetchpriority="high">
-        <link rel="preload" href="{{ \App\Support\BrandLogo::url() }}" as="image" type="image/webp" media="(min-width: 640px)" fetchpriority="high">
+        @php
+            $logoMobileUrl = asset('images/pars-lian-logo-mobile.webp') . '?v=' . (file_exists(public_path('images/pars-lian-logo-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-mobile.webp')) : '');
+            $logoDesktopUrl = \App\Support\BrandLogo::url();
+        @endphp
+        <link rel="preload" as="image" href="{{ $logoDesktopUrl }}" imagesrcset="{{ $logoMobileUrl }} 639w, {{ $logoDesktopUrl }} 1000w" imagesizes="(max-width: 639px) 150px, 320px" fetchpriority="high">
     @endif
 
     <!-- Favicon -->

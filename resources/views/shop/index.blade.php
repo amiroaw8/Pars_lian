@@ -3,9 +3,12 @@
 @section('title', 'فروشگاه پارس لیان | خرید و تعمیرات تخصصی قطعات کامپیوتر')
 
 @push('meta')
+    @php
+        $heroMobileUrl = asset('images/pars-lian-logo-hero-mobile.webp') . '?v=' . (file_exists(public_path('images/pars-lian-logo-hero-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-hero-mobile.webp')) : '');
+        $heroDesktopUrl = \App\Support\BrandLogo::heroUrl();
+    @endphp
     <!-- Preload hero logo for fast LCP on home page -->
-    <link rel="preload" href="{{ asset('images/pars-lian-logo-hero-mobile.webp') }}?v={{ file_exists(public_path('images/pars-lian-logo-hero-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-hero-mobile.webp')) : '' }}" as="image" type="image/webp" media="(max-width: 639px)" fetchpriority="high">
-    <link rel="preload" href="{{ \App\Support\BrandLogo::heroUrl() }}" as="image" type="image/webp" media="(min-width: 640px)" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ $heroDesktopUrl }}" imagesrcset="{{ $heroMobileUrl }} 639w, {{ $heroDesktopUrl }} 1000w" imagesizes="(max-width: 639px) 320px, 518px" fetchpriority="high">
 @endpush
 
 @section('shop-content')

@@ -1607,20 +1607,6 @@ function updateCartCount() {
 }
 
 // Navigation shrink on scroll
-let lastScrollY = window.scrollY;
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    const currentScrollY = window.scrollY;
-
-    if (currentScrollY > 50) {
-        nav.classList.add('nav-scrolled');
-    } else {
-        nav.classList.remove('nav-scrolled');
-    }
-
-    lastScrollY = currentScrollY;
-});
-
 // Scroll to top function
 function scrollToTop() {
     window.scrollTo({
@@ -1628,18 +1614,6 @@ function scrollToTop() {
         behavior: 'smooth'
     });
 }
-
-// Show/hide scroll to top button
-window.addEventListener('scroll', () => {
-    const scrollButton = document.querySelector('a[href="#top"]');
-    if (window.scrollY > 300) {
-        scrollButton.classList.remove('opacity-0', 'pointer-events-none');
-        scrollButton.classList.add('opacity-100', 'pointer-events-auto');
-    } else {
-        scrollButton.classList.remove('opacity-100', 'pointer-events-auto');
-        scrollButton.classList.add('opacity-0', 'pointer-events-none');
-    }
-});
 
 // Animate elements on scroll
 function animateOnScroll() {
@@ -1663,16 +1637,7 @@ function animateOnScroll() {
     });
 }
 
-// Throttle scroll events
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    if (!scrollTimeout) {
-        scrollTimeout = setTimeout(() => {
-            animateOnScroll();
-            scrollTimeout = null;
-        }, 16);
-    }
-});
+
 
 // Magnetic hover effect
 function magneticHover() {
@@ -1787,17 +1752,7 @@ document.addEventListener('DOMContentLoaded', function () {
     syncWishlistButtons();
 });
 
-// Parallax effect
-function parallaxEffect() {
-    const elements = document.querySelectorAll('.parallax-element');
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        elements.forEach(element => {
-            const rate = element.dataset.parallax || 0.5;
-            element.style.transform = `translateY(${scrolled * rate}px)`;
-        });
-    });
-}
+
 
 // Particle system
 class ParticleSystem {
@@ -2114,20 +2069,23 @@ class AnalyticsManager {
     }
 
     trackEngagement() {
-        // Track scroll depth
-        let maxScroll = 0;
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+        this.maxScroll = 0;
+        this.docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        window.addEventListener('resize', () => {
+            this.docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        });
 
-            if (scrollPercent > maxScroll) {
-                maxScroll = scrollPercent;
+        this.handleScroll = (scrollTop) => {
+            const scrollPercent = Math.round((scrollTop / (this.docHeight || 1)) * 100);
+
+            if (scrollPercent > this.maxScroll) {
+                this.maxScroll = scrollPercent;
                 if (scrollPercent % 25 === 0) { // Track every 25%
                     this.trackEvent('scroll_depth', { percentage: scrollPercent });
                 }
             }
-        });
+        };
 
         // Track time on page
         let startTime = Date.now();
@@ -2162,15 +2120,66 @@ class AnalyticsManager {
     }
 }
 
+// Centralized Passive Scroll Manager
+let isScrolling = false;
+let nav = null;
+let scrollButton = null;
+
+function handleGlobalScroll() {
+    const currentScrollY = window.pageYOffset || window.scrollY;
+    
+    // 1. Navigation shrink
+    if (nav) {
+        if (currentScrollY > 50) {
+            nav.classList.add('nav-scrolled');
+        } else {
+            nav.classList.remove('nav-scrolled');
+        }
+    }
+    
+    // 2. Scroll to top button
+    if (scrollButton) {
+        if (currentScrollY > 300) {
+            scrollButton.classList.remove('opacity-0', 'pointer-events-none');
+            scrollButton.classList.add('opacity-100', 'pointer-events-auto');
+        } else {
+            scrollButton.classList.remove('opacity-100', 'pointer-events-auto');
+            scrollButton.classList.add('opacity-0', 'pointer-events-none');
+        }
+    }
+    
+    // 3. Animate on scroll
+    animateOnScroll();
+    
+    // 4. Analytics scroll depth tracking
+    if (window.analyticsManager && typeof window.analyticsManager.handleScroll === 'function') {
+        window.analyticsManager.handleScroll(currentScrollY);
+    }
+    
+    isScrolling = false;
+}
+
 // Initialize managers
 document.addEventListener('DOMContentLoaded', () => {
     window.interactionManager = new InteractionManager();
     window.analyticsManager = new AnalyticsManager();
     window.particleSystem = new ParticleSystem();
     
-    // Initial animations
-    animateOnScroll();
+    // Cache selectors for scroll performance
+    nav = document.querySelector('nav');
+    scrollButton = document.querySelector('a[href="#top"]');
+    
+    // Initial triggers
+    handleGlobalScroll();
     magneticHover();
+    
+    // Passive scroll event listener running via requestAnimationFrame
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(handleGlobalScroll);
+            isScrolling = true;
+        }
+    }, { passive: true });
 });
 
 // Helper for filter form

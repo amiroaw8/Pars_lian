@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('use-alpine', true)
 
 @section('title', 'ویرایش پروفایل کاربری')
 @section('page_title', 'تنظیمات حساب کاربری')

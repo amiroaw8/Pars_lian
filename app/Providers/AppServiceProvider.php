@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('view-accounting-cell', [DashboardCellPolicy::class, 'viewAccountingCell']);
         Gate::policy(ServiceOrder::class, ServiceOrderPolicy::class);
 
-        \App\Models\ServiceOrder::observe(\App\Observers\ServiceOrderObserver::class);
+        ServiceOrder::observe(\App\Observers\ServiceOrderObserver::class);
         \App\Models\Inventory::observe(\App\Observers\InventoryObserver::class);
 
         Event::listen(
@@ -95,32 +95,32 @@ class AppServiceProvider extends ServiceProvider
         );
         
         // Default API Rate Limiter
-        \Illuminate\Support\Facades\RateLimiter::for('api', function (\Illuminate\Http\Request $request) {
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        RateLimiter::for('api', function (\Illuminate\Http\Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
         // Authentication Rate Limiter (Login, Register) — legacy alias
-        \Illuminate\Support\Facades\RateLimiter::for('auth', function (\Illuminate\Http\Request $request) {
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(10)->by($request->ip());
+        RateLimiter::for('auth', function (\Illuminate\Http\Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
         });
         // Verification Rate Limiter (2FA Verify) — legacy alias
-        \Illuminate\Support\Facades\RateLimiter::for('verify', function (\Illuminate\Http\Request $request) {
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(10)->by($request->ip());
+        RateLimiter::for('verify', function (\Illuminate\Http\Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
         });
 
         // Checkout Rate Limiter
-        \Illuminate\Support\Facades\RateLimiter::for('checkout', function (\Illuminate\Http\Request $request) {
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(15)->by($request->user()?->id ?: $request->ip());
+        RateLimiter::for('checkout', function (\Illuminate\Http\Request $request) {
+            return Limit::perMinute(15)->by($request->user()?->id ?: $request->ip());
         });
 
         // Global Web Rate Limiter
-        \Illuminate\Support\Facades\RateLimiter::for('web', function (\Illuminate\Http\Request $request) {
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(100)->by($request->user()?->id ?: $request->ip());
+        RateLimiter::for('web', function (\Illuminate\Http\Request $request) {
+            return Limit::perMinute(100)->by($request->user()?->id ?: $request->ip());
         });
 
         // SMS Rate Limiter
-        \Illuminate\Support\Facades\RateLimiter::for('sms', function (\Illuminate\Http\Request $request) {
-            return \Illuminate\Cache\RateLimiting\Limit::perMinute(2)->by($request->user()?->id ?: $request->ip());
+        RateLimiter::for('sms', function (\Illuminate\Http\Request $request) {
+            return Limit::perMinute(2)->by($request->user()?->id ?: $request->ip());
         });
 
         Blade::component('enhanced-card', EnhancedCard::class);
@@ -131,5 +131,16 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\User::observe(\App\Observers\UserObserver::class);
         \App\Models\Customer::observe(\App\Observers\CustomerObserver::class);
         \App\Models\Order::observe(\App\Observers\OrderObserver::class);
+
+        // Load non-critical stylesheets asynchronously to prevent render-blocking
+        \Illuminate\Support\Facades\Vite::useStyleTagAttributes(function (string $src, string $url, ?array $chunk, ?array $manifest) {
+            if (str_contains($src, 'form-enhancements.css')) {
+                return [
+                    'media' => 'print',
+                    'onload' => "this.media='all'",
+                ];
+            }
+            return [];
+        });
     }
 }

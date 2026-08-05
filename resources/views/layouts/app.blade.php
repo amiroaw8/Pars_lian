@@ -528,8 +528,9 @@
         }, 5000);
     </script>
 
-    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
-    <script defer src="{{ asset('js/money-input.js') }}"></script>
+    @hasSection('use-alpine')
+        <script defer src="{{ asset('js/alpine.min.js') }}"></script>
+    @endif
 
     @yield('scripts')
     @stack('scripts')

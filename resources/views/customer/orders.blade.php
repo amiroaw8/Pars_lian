@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('use-alpine', true)
 
 @section('title', 'تاریخچه سفارشات')
 @section('page_title', 'لیست تمامی سفارشات')

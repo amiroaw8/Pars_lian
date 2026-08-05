@@ -749,6 +749,7 @@
 </div>
 
 @push('scripts')
+<script defer src="{{ asset('js/money-input.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const observerOptions = { threshold: 0.1 };

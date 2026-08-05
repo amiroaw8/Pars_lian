@@ -1768,11 +1768,17 @@ class ParticleSystem {
     init() {
         if (!this.container) return;
 
-        for (let i = 0; i < this.maxParticles; i++) {
+        // Gradually create particles to prevent main-thread blockage
+        let count = 0;
+        const interval = setInterval(() => {
+            if (count >= this.maxParticles) {
+                clearInterval(interval);
+                this.animate();
+                return;
+            }
             this.createParticle();
-        }
-
-        this.animate();
+            count++;
+        }, 100);
     }
 
     createParticle() {
@@ -1833,8 +1839,16 @@ class InteractionManager {
 
     setupMagneticEffects() {
         document.querySelectorAll('.magnetic-hover').forEach(element => {
+            let rect = null;
+
+            element.addEventListener('mouseenter', () => {
+                rect = element.getBoundingClientRect();
+            });
+
             element.addEventListener('mousemove', (e) => {
-                const rect = element.getBoundingClientRect();
+                if (!rect) {
+                    rect = element.getBoundingClientRect();
+                }
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
                 const deltaX = (e.clientX - centerX) * 0.1;
@@ -1845,6 +1859,7 @@ class InteractionManager {
 
             element.addEventListener('mouseleave', () => {
                 element.style.transform = 'translate(0, 0) scale(1)';
+                rect = null;
             });
         });
     }
@@ -2160,27 +2175,34 @@ function handleGlobalScroll() {
     isScrolling = false;
 }
 
-// Initialize managers
+// Initialize managers using requestIdleCallback to prevent blocking initial load
 document.addEventListener('DOMContentLoaded', () => {
-    window.interactionManager = new InteractionManager();
-    window.analyticsManager = new AnalyticsManager();
-    window.particleSystem = new ParticleSystem();
-    
-    // Cache selectors for scroll performance
-    nav = document.querySelector('nav');
-    scrollButton = document.querySelector('a[href="#top"]');
-    
-    // Initial triggers
-    handleGlobalScroll();
-    magneticHover();
-    
-    // Passive scroll event listener running via requestAnimationFrame
-    window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            window.requestAnimationFrame(handleGlobalScroll);
-            isScrolling = true;
-        }
-    }, { passive: true });
+    const initManagers = () => {
+        window.interactionManager = new InteractionManager();
+        window.analyticsManager = new AnalyticsManager();
+        window.particleSystem = new ParticleSystem();
+        
+        // Cache selectors for scroll performance
+        nav = document.querySelector('nav');
+        scrollButton = document.querySelector('a[href="#top"]');
+        
+        // Initial triggers
+        handleGlobalScroll();
+        
+        // Passive scroll event listener running via requestAnimationFrame
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(handleGlobalScroll);
+                isScrolling = true;
+            }
+        }, { passive: true });
+    };
+
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(initManagers);
+    } else {
+        setTimeout(initManagers, 100);
+    }
 });
 
 // Helper for filter form

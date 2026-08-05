@@ -709,7 +709,8 @@
                                     </div>
                                     <button class="btn-add-to-cart w-12 h-12 bg-gray-900 text-white rounded-2xl flex items-center justify-center hover:bg-blue-600 transition-all duration-300 shadow-lg shadow-gray-200 hover:shadow-blue-200"
                                             data-product-slug="{{ $product->slug }}"
-                                            data-max-qty="{{ $product->stock_quantity }}">
+                                            data-max-qty="{{ $product->stock_quantity }}"
+                                            aria-label="افزودن به سبد خرید">
                                         <i class="ti ti-shopping-cart text-xl"></i>
                                     </button>
                                 </div>

@@ -3,4 +3,5 @@
     $tablerCssUrl = asset('vendor/tabler-icons/tabler-icons.min.css') . '?v3.36.1';
 ?>
 <link rel="preload" href="{{ $tablerFontUrl }}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{{ $tablerCssUrl }}">
+<link rel="preload" href="{{ $tablerCssUrl }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ $tablerCssUrl }}"></noscript>

@@ -844,20 +844,17 @@
                          On sm+ it sits between logo & buttons via flex order
                          ═══════════════════════════════════════════════════════════ -->
                     <div class="w-full order-3 sm:order-none sm:flex-1 sm:mx-4 sm:max-w-2xl mt-1 sm:mt-0">
-                        <form action="{{ route('catalog.index') }}" method="GET" class="relative group" role="search" aria-label="جستجوی محصولات">
+                        <form action="{{ route('catalog.index') }}" method="GET" class="relative w-full" role="search" aria-label="جستجوی محصولات">
                             <label for="search-input" class="sr-only">جستجو در محصولات</label>
-                            <div class="relative">
+                            <div class="relative w-full flex items-center">
                                 <input type="text" name="q" placeholder="جستجو در محصولات، برندها و..."
-                                       class="w-full pl-12 pr-12 py-3 sm:py-4 bg-gray-100/70 backdrop-blur-sm border-2 border-transparent rounded-full focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 focus:bg-white transition-all duration-300 text-gray-700 placeholder-gray-400 shadow-inner hover:bg-gray-100 min-h-[44px] text-sm sm:text-base"
+                                       class="w-full pr-16 pl-4 py-3 bg-gray-50/80 border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 text-sm font-medium shadow-[inset_0_2px_4px_rgba(0,0,0,0.01)] min-h-[48px]"
                                        value="{{ request('q') }}"
                                        id="search-input"
                                        aria-label="جستجو در محصولات"
                                        title="جستجو در محصولات">
-                                <button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full text-gray-400 hover:text-blue-500 transition-colors" aria-label="جستجو">
-                                    <i class="ti ti-search text-lg sm:text-xl"></i>
-                                </button>
-                                <button type="button" onclick="startVoiceSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full text-gray-400 hover:text-green-500 transition-colors" id="voice-btn" aria-label="جستجوی صوتی" title="جستجوی صوتی">
-                                    <i class="ti ti-microphone text-lg sm:text-xl"></i>
+                                <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 p-2" aria-label="جستجو">
+                                    <i class="ti ti-search text-xl"></i>
                                 </button>
                             </div>
 
@@ -878,25 +875,25 @@
                     <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 order-2 sm:order-none">
                         <!-- Compare -->
                         <button onclick="showCompareModal()"
-                                class="w-10 h-10 sm:w-11 sm:h-11 bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative group"
+                                class="w-11 h-11 bg-purple-50 hover:bg-purple-100 text-purple-600 border border-purple-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative group"
                                 aria-label="مقایسه محصولات">
-                            <i class="ti ti-git-compare text-lg sm:text-xl"></i>
+                            <i class="ti ti-git-compare text-xl"></i>
                             <span class="compare-count absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white hidden" id="compare-count">0</span>
                         </button>
 
                         <!-- Wishlist -->
                         <button onclick="showWishlistModal()"
-                                class="w-10 h-10 sm:w-11 sm:h-11 bg-red-50 hover:bg-red-100 text-red-500 border border-red-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative group"
+                                class="w-11 h-11 bg-red-50 hover:bg-red-100 text-red-500 border border-red-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative group"
                                 aria-label="لیست علاقه‌مندی‌ها">
-                            <i class="ti ti-heart text-lg sm:text-xl"></i>
+                            <i class="ti ti-heart text-xl"></i>
                             <span class="wishlist-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white hidden" id="wishlist-count">0</span>
                         </button>
 
                         <!-- Cart -->
                         <div class="relative group/cart" id="mini-cart-wrapper">
                             <a href="{{ route('cart.index') }}"
-                               class="w-10 h-10 sm:w-11 sm:h-11 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative">
-                                <i class="ti ti-shopping-cart text-lg sm:text-xl"></i>
+                               class="w-11 h-11 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200/60 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm relative">
+                                <i class="ti ti-shopping-cart text-xl"></i>
                                 <span class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 items-center justify-center border-2 border-white animate-bounce hidden" id="cart-count">0</span>
                             </a>
 
@@ -998,7 +995,7 @@
                                     </div>
                                     <div class="hidden sm:flex flex-col items-start leading-tight">
                                         <span class="text-gray-700 font-medium text-sm">{{ $shopUser->name }}</span>
-                                        <span class="text-[10px] text-gray-400">{{ $shopUser->getRoleDisplayName() }}</span>
+                                        <span class="text-[10px] text-gray-500">{{ $shopUser->getRoleDisplayName() }}</span>
                                     </div>
                                     <i class="ti ti-chevron-down text-gray-400 text-xs transition-transform duration-300" data-shop-user-menu-chevron></i>
                                 </button>
@@ -1361,67 +1358,7 @@
 
 @section('scripts')
 <script>
-(function () {
-    function closeShopUserMenu(menu) {
-        const toggle = menu.querySelector('[data-shop-user-menu-toggle]');
-        const panel = menu.querySelector('[data-shop-user-menu-panel]');
-        const chevron = menu.querySelector('[data-shop-user-menu-chevron]');
-        if (!panel || !toggle) return;
-        panel.classList.add('hidden');
-        toggle.setAttribute('aria-expanded', 'false');
-        if (chevron) chevron.classList.remove('rotate-180');
-    }
-
-    function initShopUserMenu() {
-        document.querySelectorAll('[data-shop-user-menu]').forEach(function (menu) {
-            if (menu.dataset.shopUserMenuBound === '1') {
-                closeShopUserMenu(menu);
-                return;
-            }
-            menu.dataset.shopUserMenuBound = '1';
-
-            const toggle = menu.querySelector('[data-shop-user-menu-toggle]');
-            const panel = menu.querySelector('[data-shop-user-menu-panel]');
-            const chevron = menu.querySelector('[data-shop-user-menu-chevron]');
-            if (!toggle || !panel) return;
-
-            closeShopUserMenu(menu);
-
-            toggle.addEventListener('click', function (event) {
-                event.stopPropagation();
-                const isOpen = !panel.classList.contains('hidden');
-                panel.classList.toggle('hidden', isOpen);
-                toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-                if (chevron) {
-                    chevron.classList.toggle('rotate-180', !isOpen);
-                }
-            });
-
-            document.addEventListener('click', function (event) {
-                if (!menu.contains(event.target)) {
-                    closeShopUserMenu(menu);
-                }
-            });
-        });
-    }
-
-    function bootShopUserMenu() {
-        initShopUserMenu();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bootShopUserMenu);
-    } else {
-        bootShopUserMenu();
-    }
-
-    // بازگشت از bfcache / کش مرورگر — HTML تازه از سرور
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted) {
-            window.location.reload();
-        }
-    });
-})();
+!function(){function e(e){const t=e.querySelector("[data-shop-user-menu-toggle]"),n=e.querySelector("[data-shop-user-menu-panel]"),o=e.querySelector("[data-shop-user-menu-chevron]");n&&t&&(n.classList.add("hidden"),t.setAttribute("aria-expanded","false"),o&&o.classList.remove("rotate-180"))}function t(){document.querySelectorAll("[data-shop-user-menu]").forEach((function(t){if("1"===t.dataset.shopUserMenuBound)return void e(t);t.dataset.shopUserMenuBound="1";const n=t.querySelector("[data-shop-user-menu-toggle]"),o=t.querySelector("[data-shop-user-menu-panel]"),u=t.querySelector("[data-shop-user-menu-chevron]");n&&o&&(e(t),n.addEventListener("click",(function(e){e.stopPropagation();const t=!o.classList.contains("hidden");o.classList.toggle("hidden",t),n.setAttribute("aria-expanded",t?"false":"true"),u&&u.classList.toggle("rotate-180",!t)})),document.addEventListener("click",(function(n){t.contains(n.target)||e(t)})))}))}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",t):t(),window.addEventListener("pageshow",(function(e){e.persisted&&window.location.reload()}))}();
 
 // Advanced notification system
 class NotificationManager {
@@ -1706,13 +1643,22 @@ window.addEventListener('scroll', () => {
 
 // Animate elements on scroll
 function animateOnScroll() {
-    const elements = document.querySelectorAll('.fade-in-up');
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementBottom = element.getBoundingClientRect().bottom;
-
-        if (elementTop < window.innerHeight && elementBottom > 0) {
-            element.classList.add('animate');
+    const elements = document.querySelectorAll('.fade-in-up:not(.animate)');
+    if (!elements.length) return;
+    
+    // Read phase
+    const rects = Array.from(elements).map(el => ({
+        el,
+        top: el.getBoundingClientRect().top,
+        bottom: el.getBoundingClientRect().bottom
+    }));
+    
+    const windowHeight = window.innerHeight;
+    
+    // Write phase
+    rects.forEach(rect => {
+        if (rect.top < windowHeight && rect.bottom > 0) {
+            rect.el.classList.add('animate');
         }
     });
 }

@@ -1,9 +1,9 @@
 <style>
 select.form-control:not(.select2-hidden-accessible),
 select.form-control-modern:not(.select2-hidden-accessible) {
-    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
     width: 100%;
     min-height: 2.75rem;
     height: auto !important;

@@ -529,7 +529,7 @@
     </script>
 
     <script defer src="{{ asset('js/alpine.min.js') }}"></script>
-    <script src="{{ asset('js/money-input.js') }}"></script>
+    <script defer src="{{ asset('js/money-input.js') }}"></script>
 
     @yield('scripts')
     @stack('scripts')

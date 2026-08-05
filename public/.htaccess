@@ -20,27 +20,52 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+# =============================================
+# فعال‌سازی فشرده‌سازی (Gzip / Brotli) - حل مشکل No compression
+# =============================================
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml font/woff2
 </IfModule>
 
+# پشتیبانی از Brotli (اگر سرور فعال کرده باشد)
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml font/woff2
+</IfModule>
+
+# =============================================
+# تنظیم کش (Cache) برای همه فایل‌های استاتیک - حل مشکل Cache TTL
+# =============================================
 <IfModule mod_expires.c>
     ExpiresActive On
+
+    # تصاویر و فونت‌ها (یک سال)
     ExpiresByType image/jpg "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/pdf "access plus 1 month"
-    ExpiresByType text/x-javascript "access plus 1 month"
-    ExpiresByType application/x-shockwave-flash "access plus 1 month"
     ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+
+    # فایل‌های CSS و JS (یک سال - چون معمولاً با هش نسخه‌گذاری می‌شوند)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+
+    # سایر فایل‌ها (مثل PDF، فلش و...)
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+
+    # پیش‌فرض برای فایل‌های دیگر (۲ روز)
     ExpiresDefault "access plus 2 days"
 </IfModule>
 
+# =============================================
+# تنظیم هدرهای نهایی برای اطمینان (حل مشکل max-age)
+# =============================================
 <IfModule mod_headers.c>
-    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|webp|swf|css|js)$">
-        Header set Cache-Control "max-age=2592000, public"
+    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|webp|swf|css|js|woff2|woff|svg)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 </IfModule>

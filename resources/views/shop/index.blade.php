@@ -83,7 +83,7 @@
                         <div class="relative z-10 flex justify-center items-center">
                             <img loading="eager" fetchpriority="high"
                                 src="{{ \App\Support\BrandLogo::heroUrl() }}"
-                                alt="پارس لیان — Pars Lian"
+                                alt="پارس لیان — Pars Lian" width="518" height="387"
                                 oncontextmenu="return false;" ondragstart="return false;"
                                 class="relative w-full h-auto max-w-[640px] rounded-2xl object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02] select-none pointer-events-none">
 
@@ -275,8 +275,7 @@
                                     </div>
                                     <div>
                                         <h3 class="font-black text-slate-900 mb-1">تیم فنی مجرب</h3>
-                                        <p class="text-sm text-slate-500">بهره‌مندی از دانش بهترین تکنسین‌های سخت‌افزار
-                                            ایران.</p>
+                                        <p class="text-sm text-slate-500">بهره مندی از دانش بهترین تکنسین های سخت افزار.</p>
                                     </div>
                                 </div>
                                 <div class="flex gap-4">
@@ -323,8 +322,7 @@
                                         </div>
                                     </div>
                                     <blockquote class="text-slate-600 leading-relaxed italic text-lg mb-8">
-                                        "هدف ما در پارس لیان، ایجاد بستری امن برای تامین قطعاتی است که قلب تپنده سیستم‌های
-                                        شما هستند. کیفیت هرگز اتفاقی نیست."
+                                        هدف ما در پارس لیان، ایجاد بستری امن برای تأمین قطعاتی است که قلب تپندهٔ سیستم‌های شما هستند؛ و در کنار آن، در بحث تعمیرات نیز همراه و پشتیبان شما خواهیم بود تا همواره آرامش خاطر داشته باشید.
                                     </blockquote>
                                     <div class="flex items-center gap-4 border-t border-slate-100 pt-8">
                                         <div

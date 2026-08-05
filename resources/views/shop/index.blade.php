@@ -2,6 +2,12 @@
 
 @section('title', 'فروشگاه پارس لیان | خرید و تعمیرات تخصصی قطعات کامپیوتر')
 
+@push('meta')
+    <!-- Preload hero logo for fast LCP on home page -->
+    <link rel="preload" href="{{ asset('images/pars-lian-logo-hero-mobile.webp') }}?v={{ file_exists(public_path('images/pars-lian-logo-hero-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-hero-mobile.webp')) : '' }}" as="image" type="image/webp" media="(max-width: 639px)" fetchpriority="high">
+    <link rel="preload" href="{{ \App\Support\BrandLogo::heroUrl() }}" as="image" type="image/webp" media="(min-width: 640px)" fetchpriority="high">
+@endpush
+
 @section('shop-content')
     <div class="bg-white min-h-screen font-vazir">
         <!-- Hero Section -->
@@ -81,11 +87,17 @@
 
                     <div class="lg:w-1/2 relative animate-slide-up">
                         <div class="relative z-10 flex justify-center items-center">
-                            <img loading="eager" fetchpriority="high"
-                                src="{{ \App\Support\BrandLogo::heroUrl() }}"
-                                alt="پارس لیان — Pars Lian" width="518" height="387"
-                                oncontextmenu="return false;" ondragstart="return false;"
-                                class="relative w-full h-auto max-w-[640px] rounded-2xl object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02] select-none pointer-events-none">
+                            @php
+                                $heroMobileUrl = asset('images/pars-lian-logo-hero-mobile.webp') . '?v=' . (file_exists(public_path('images/pars-lian-logo-hero-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-hero-mobile.webp')) : '');
+                            @endphp
+                            <picture>
+                                <source srcset="{{ $heroMobileUrl }}" media="(max-width: 639px)">
+                                <img loading="eager" fetchpriority="high"
+                                    src="{{ \App\Support\BrandLogo::heroUrl() }}"
+                                    alt="پارس لیان — Pars Lian" width="518" height="387"
+                                    oncontextmenu="return false;" ondragstart="return false;"
+                                    class="relative w-full h-auto max-w-[640px] rounded-2xl object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02] select-none pointer-events-none">
+                            </picture>
 
                             <!-- Floating Badge -->
                             <div

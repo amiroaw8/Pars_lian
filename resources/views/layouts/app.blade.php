@@ -38,6 +38,12 @@
     @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 
+    <!-- Logo Preloads -->
+    @if(\App\Support\BrandLogo::exists())
+        <link rel="preload" href="{{ asset('images/pars-lian-logo-mobile.webp') }}?v={{ file_exists(public_path('images/pars-lian-logo-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-mobile.webp')) : '' }}" as="image" type="image/webp" media="(max-width: 639px)" fetchpriority="high">
+        <link rel="preload" href="{{ \App\Support\BrandLogo::url() }}" as="image" type="image/webp" media="(min-width: 640px)" fetchpriority="high">
+    @endif
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     @if(\App\Support\BrandLogo::exists())

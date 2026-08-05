@@ -1615,35 +1615,36 @@ function scrollToTop() {
     });
 }
 
-// Animate elements on scroll
+// Animate elements on scroll using IntersectionObserver
 function animateOnScroll() {
     const elements = document.querySelectorAll('.fade-in-up:not(.animate)');
     if (!elements.length) return;
     
-    // Read phase
-    const rects = Array.from(elements).map(el => ({
-        el,
-        top: el.getBoundingClientRect().top,
-        bottom: el.getBoundingClientRect().bottom
-    }));
-    
-    const windowHeight = window.innerHeight;
-    
-    // Write phase
-    rects.forEach(rect => {
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            rect.el.classList.add('animate');
-        }
-    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    elements.forEach(el => observer.observe(el));
 }
-
-
 
 // Magnetic hover effect
 function magneticHover() {
     document.querySelectorAll('.magnetic-hover').forEach(element => {
+        let rect = null;
+
+        element.addEventListener('mouseenter', () => {
+            rect = element.getBoundingClientRect();
+        });
+
         element.addEventListener('mousemove', (e) => {
-            const rect = element.getBoundingClientRect();
+            if (!rect) {
+                rect = element.getBoundingClientRect();
+            }
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
 
@@ -1652,6 +1653,7 @@ function magneticHover() {
 
         element.addEventListener('mouseleave', () => {
             element.style.transform = 'translate(0, 0)';
+            rect = null;
         });
     });
 }
@@ -2148,8 +2150,7 @@ function handleGlobalScroll() {
         }
     }
     
-    // 3. Animate on scroll
-    animateOnScroll();
+
     
     // 4. Analytics scroll depth tracking
     if (window.analyticsManager && typeof window.analyticsManager.handleScroll === 'function') {

@@ -88,19 +88,18 @@
                         </div>
                     </div>
 
-                    <div class="lg:w-1/2 relative animate-slide-up">
+                    <div class="lg:w-1/2 relative">
                         <div class="relative z-10 flex justify-center items-center">
                             @php
                                 $heroMobileUrl = asset('images/pars-lian-logo-hero-mobile.webp') . '?v=' . (file_exists(public_path('images/pars-lian-logo-hero-mobile.webp')) ? filemtime(public_path('images/pars-lian-logo-hero-mobile.webp')) : '');
                             @endphp
-                            <picture>
-                                <source srcset="{{ $heroMobileUrl }}" media="(max-width: 639px)">
-                                <img loading="eager" fetchpriority="high"
-                                    src="{{ \App\Support\BrandLogo::heroUrl() }}"
-                                    alt="پارس لیان — Pars Lian" width="518" height="387"
-                                    oncontextmenu="return false;" ondragstart="return false;"
-                                    class="relative w-full h-auto max-w-[640px] rounded-2xl object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02] select-none pointer-events-none">
-                            </picture>
+                            <img loading="eager" fetchpriority="high"
+                                src="{{ \App\Support\BrandLogo::heroUrl() }}"
+                                srcset="{{ $heroMobileUrl }} 639w, {{ \App\Support\BrandLogo::heroUrl() }} 1000w"
+                                sizes="(max-width: 639px) 320px, 518px"
+                                alt="پارس لیان — Pars Lian" width="518" height="387"
+                                oncontextmenu="return false;" ondragstart="return false;"
+                                class="relative w-full h-auto max-w-[640px] rounded-2xl object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02] select-none pointer-events-none">
 
                             <!-- Floating Badge -->
                             <div

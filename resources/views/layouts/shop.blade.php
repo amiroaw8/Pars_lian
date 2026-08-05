@@ -10,15 +10,15 @@
         background: var(--bg-card);
         border-radius: 1.5rem;
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
         position: relative;
         box-shadow: var(--shadow-soft);
         color: var(--text-main);
+        will-change: transform;
     }
 
     .product-card:hover {
         transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.1);
     }
 
     .product-card::before {
@@ -223,6 +223,16 @@
     /* Magnetic hover effect */
     .magnetic-hover {
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+    }
+
+    /* Hover lift effect — only composited properties to prevent forced reflow */
+    .hover-lift {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        will-change: transform;
+    }
+    .hover-lift--active {
+        transform: translateY(-8px) scale(1.02);
     }
 
     /* Glow effect */
@@ -259,11 +269,11 @@
         max-height: 100dvh;
     }
 
-    /* Scroll to top button */
+    /* Scroll to top button — only animate composited properties */
     a[href="#top"] {
         opacity: 0;
         pointer-events: none;
-        transition: all 0.3s ease;
+        transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     a[href="#top"].opacity-100 {
@@ -271,11 +281,12 @@
         pointer-events: auto;
     }
 
-    /* Page animations */
+    /* Page animations — only composited properties */
     .fade-in-up {
         opacity: 0;
         transform: translateY(30px);
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, opacity;
     }
 
     .fade-in-up.animate {
@@ -1749,9 +1760,17 @@ function syncWishlistButtons() {
     });
 }
 
+// Defer wishlist/cart init to idle time to avoid blocking page parse
 document.addEventListener('DOMContentLoaded', function () {
-    updateWishlistCount();
-    syncWishlistButtons();
+    const initWishlist = () => {
+        updateWishlistCount();
+        syncWishlistButtons();
+    };
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(initWishlist);
+    } else {
+        setTimeout(initWishlist, 150);
+    }
 });
 
 
@@ -1761,7 +1780,8 @@ class ParticleSystem {
     constructor() {
         this.container = document.querySelector('.particles-container');
         this.particles = [];
-        this.maxParticles = 15;
+        // Disable particles on mobile/tablet to save CPU
+        this.maxParticles = window.innerWidth < 1024 ? 0 : 8;
         this.init();
     }
 
@@ -1884,16 +1904,10 @@ class InteractionManager {
     }
 
     setupHoverEffects() {
+        // Use CSS class toggling instead of inline styles to avoid forced reflow
         document.querySelectorAll('.hover-lift').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                element.style.transform = 'translateY(-8px) scale(1.02)';
-                element.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
-            });
-
-            element.addEventListener('mouseleave', () => {
-                element.style.transform = 'translateY(0) scale(1)';
-                element.style.boxShadow = '';
-            });
+            element.addEventListener('mouseenter', () => element.classList.add('hover-lift--active'));
+            element.addEventListener('mouseleave', () => element.classList.remove('hover-lift--active'));
         });
     }
 
@@ -1901,20 +1915,14 @@ class InteractionManager {
         document.querySelectorAll('.click-ripple').forEach(element => {
             element.addEventListener('click', (e) => {
                 const ripple = document.createElement('div');
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s linear';
-                ripple.style.left = (e.offsetX - 10) + 'px';
-                ripple.style.top = (e.offsetY - 10) + 'px';
-                ripple.style.width = '20px';
-                ripple.style.height = '20px';
-                ripple.style.pointerEvents = 'none';
-
+                // Use relative coords from bounding rect — avoids offsetX/Y forced layout
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left - 10;
+                const y = e.clientY - rect.top - 10;
+                ripple.style.cssText = `position:absolute;border-radius:50%;background:rgba(255,255,255,0.6);transform:scale(0);animation:ripple 0.6s linear;left:${x}px;top:${y}px;width:20px;height:20px;pointer-events:none`;
                 element.style.position = 'relative';
+                element.style.overflow = 'hidden';
                 element.appendChild(ripple);
-
                 setTimeout(() => ripple.remove(), 600);
             });
         });
@@ -2001,21 +2009,7 @@ class AnalyticsManager {
             }, 30000); // Every 30 seconds
         }
 
-        // Monitor network requests
-        const originalFetch = window.fetch;
-        window.fetch = function(...args) {
-            const start = performance.now();
-            return originalFetch.apply(this, args).then(response => {
-                const duration = performance.now() - start;
-                analyticsManager.trackEvent('network_request', {
-                    url: args[0],
-                    method: args[1]?.method || 'GET',
-                    status: response.status,
-                    duration: duration
-                });
-                return response;
-            });
-        };
+        // Network monitoring removed — wrapping window.fetch globally adds overhead to every API call
 
         // Product recommendation system
         this.productViews = JSON.parse(localStorage.getItem('productViews') || '[]');
@@ -2188,6 +2182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Initial triggers
         handleGlobalScroll();
+        animateOnScroll();
         
         // Passive scroll event listener running via requestAnimationFrame
         window.addEventListener('scroll', () => {

@@ -314,17 +314,18 @@
     </style>
 </head>
 <body class="app-layout">
-    <x-page-loader logo-size="lg" logo-class="h-14 max-w-[180px] rounded-xl" />
+    @yield('loading')
     <script>
         (function () {
             function forceHideLoader() {
                 var loader = document.getElementById('pageLoader');
                 if (!loader) return;
                 loader.classList.add('hide');
-                loader.style.display = 'none';
+                setTimeout(function() { loader.style.display = 'none'; }, 600);
             }
-            window.addEventListener('load', function () { setTimeout(forceHideLoader, 900); });
-            setTimeout(forceHideLoader, 3500);
+            // Hide as soon as page is interactive, not after 900ms extra delay
+            window.addEventListener('load', forceHideLoader);
+            setTimeout(forceHideLoader, 2500);
         })();
     </script>
     @php

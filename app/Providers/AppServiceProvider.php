@@ -132,9 +132,25 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Customer::observe(\App\Observers\CustomerObserver::class);
         \App\Models\Order::observe(\App\Observers\OrderObserver::class);
 
-        // Load non-critical stylesheets asynchronously to prevent render-blocking
-        \Illuminate\Support\Facades\Vite::useStyleTagAttributes(function (string $src, string $url, ?array $chunk, ?array $manifest) {
+        // Load non-critical stylesheets asynchronously to prevent render-blocking.
+        // app.css is only made async for public shop routes (/, /catalog, /product, /cart, /tracking, /checkout)
+        // where critical above-the-fold styles are inlined in app.blade.php.
+        // Admin/panel routes keep app.css synchronous to avoid FOUC.
+        $isPublicShopRoute = request()->is('/')
+            || request()->is('catalog*')
+            || request()->is('product*')
+            || request()->is('cart*')
+            || request()->is('checkout*')
+            || request()->is('tracking*');
+
+        \Illuminate\Support\Facades\Vite::useStyleTagAttributes(function (string $src, string $url, ?array $chunk, ?array $manifest) use ($isPublicShopRoute) {
             if (str_contains($src, 'form-enhancements.css')) {
+                return [
+                    'media' => 'print',
+                    'onload' => "this.media='all'",
+                ];
+            }
+            if ($isPublicShopRoute && str_contains($src, 'app.css')) {
                 return [
                     'media' => 'print',
                     'onload' => "this.media='all'",

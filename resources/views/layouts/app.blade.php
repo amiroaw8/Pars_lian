@@ -36,7 +36,44 @@
     <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
     @include('partials.tabler-icons-assets')
+
+    <!-- Critical CSS inline — prevents FOUC while app.css loads async -->
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
+        body{font-family:'Vazirmatn',Tahoma,sans-serif;direction:rtl;background-color:#f8fafc;min-height:100vh}
+        .app-layout{display:flex;flex-direction:column;min-height:100vh}
+        header,nav{position:sticky;top:0;z-index:50}
+        img{max-width:100%;height:auto;display:block}
+        .hidden{display:none !important}
+        /* Hero section: bg-slate-900 matches actual hero class */
+        .bg-slate-900{background-color:#0f172a}
+        .bg-white{background-color:#fff}
+        .min-h-screen{min-height:100vh}
+        /* Prevent invisible text during font swap */
+        .text-white{color:#fff}
+        .font-black{font-weight:900}
+        .leading-tight{line-height:1.25}
+        /* Layout primitives */
+        .relative{position:relative}
+        .absolute{position:absolute}
+        .inset-0{top:0;right:0;bottom:0;left:0}
+        .overflow-hidden{overflow:hidden}
+        .flex{display:flex}
+        .flex-col{flex-direction:column}
+        .items-center{align-items:center}
+        .w-full{width:100%}
+        .max-w-7xl{max-width:80rem}
+        .mx-auto{margin-right:auto;margin-left:auto}
+        .px-4{padding-right:1rem;padding-left:1rem}
+        /* Navigation placeholder to prevent CLS */
+        .sticky{position:sticky}
+        .top-0{top:0}
+        .z-50{z-index:50}
+    </style>
+
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
+
 
     <!-- Logo Preloads -->
     @if(\App\Support\BrandLogo::exists())

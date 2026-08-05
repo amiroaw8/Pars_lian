@@ -34,7 +34,7 @@
 
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center lg:text-right flex flex-col lg:flex-row items-center justify-between gap-10">
-                    <div class="lg:w-1/2 animate-fade-in">
+                    <div class="lg:w-1/2">
                         <div
                             class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold mb-6">
                             <span class="relative flex h-2 w-2">

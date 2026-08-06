@@ -751,9 +751,31 @@
         backdrop-filter: blur(16px);
     }
 
-    nav.nav-scrolled .hidden.md\\:flex > div > a {
-        transform: scale(0.95);
-        padding: 0.75rem 1.25rem;
+    /* ═══════════════════════════════════════════════
+       Header Auth Buttons — reliable responsive CSS
+       (not relying on Tailwind JIT for these)
+       ═══════════════════════════════════════════════ */
+
+    /* Desktop: show text buttons, hide icon */
+    .header-auth-desktop {
+        display: none;
+        align-items: center;
+        gap: 0.5rem;
+        margin-right: 0.25rem;
+    }
+
+    .header-auth-mobile {
+        display: flex;
+    }
+
+    @media (min-width: 640px) {
+        .header-auth-desktop {
+            display: flex;
+        }
+
+        .header-auth-mobile {
+            display: none;
+        }
     }
 
     .custom-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -980,12 +1002,18 @@
 
                         <!-- User Profile/Login -->
                         @guest
-                            <div class="hidden sm:flex items-center gap-1 mr-1">
-                                <a href="{{ route('login') }}" class="px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm">ورود</a>
-                                <a href="{{ route('register') }}" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-md hover:shadow-lg text-sm">ثبت نام</a>
+                            <div class="header-auth-desktop">
+                                <a href="{{ route('login') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm border border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50">
+                                    <i class="ti ti-login text-base"></i>
+                                    ورود
+                                </a>
+                                <a href="{{ route('register') }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-md hover:shadow-lg text-sm">
+                                    <i class="ti ti-user-plus text-base"></i>
+                                    ثبت نام
+                                </a>
                             </div>
                             <a href="{{ route('login') }}"
-                               class="sm:hidden w-10 h-10 bg-blue-500 text-white rounded-xl flex items-center justify-center shadow-md border border-blue-400"
+                               class="header-auth-mobile w-10 h-10 bg-blue-500 text-white rounded-xl items-center justify-center shadow-md border border-blue-400"
                                aria-label="ورود به حساب کاربری">
                                 <i class="ti ti-user text-lg"></i>
                             </a>
@@ -1104,6 +1132,8 @@
                         <i class="ti ti-truck-delivery text-lg sm:text-base"></i>
                         <span class="text-[10px] sm:text-sm font-bold">پیگیری</span>
                     </a>
+
+                    <!-- Desktop-only auth links — handled in header row above -->
                 </nav>
             </div>
         </div>

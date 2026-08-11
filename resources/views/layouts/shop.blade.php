@@ -932,7 +932,7 @@
                             </a>
 
                             <!-- Mini Cart Dropdown -->
-                            <div class="absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden opacity-0 invisible translate-y-2 group-hover/cart:opacity-100 group-hover/cart:visible group-hover/cart:translate-y-0 transition-all duration-300" id="mini-cart-dropdown">
+                            <div class="hidden sm:block absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden opacity-0 invisible translate-y-2 group-hover/cart:opacity-100 group-hover/cart:visible group-hover/cart:translate-y-0 transition-all duration-300" id="mini-cart-dropdown">
                                 <div id="mini-cart-content">
                                     <!-- Content will be loaded via AJAX -->
                                     <div class="p-8 text-center">
@@ -1154,12 +1154,11 @@
 
                     <div class="flex-1 overflow-y-auto space-y-4 no-scrollbar">
                         <!-- Mobile Search -->
-                        <div class="mb-6">
-                            <form action="{{ route('catalog.index') }}" method="GET" class="relative">
+                        <div class="mb-6 px-1 py-1">
+                            <form action="http://127.0.0.1:8000/catalog" method="GET" class="relative z-10">
                                 <input type="text" name="q" placeholder="جستجو در فروشگاه..."
-                                       class="w-full py-3 pr-10 pl-4 bg-gray-100 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500"
+                                       class="w-full py-3 px-5 bg-gray-100 rounded-2xl text-sm outline-none ring-2 ring-transparent focus:bg-white focus:ring-blue-400/50 focus:shadow-[0_4px_20px_-4px_rgba(59,130,246,0.25)] transition-all duration-300"
                                        value="{{ request('q') }}">
-                                <i class="ti ti-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                             </form>
                         </div>
 

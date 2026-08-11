@@ -55,7 +55,7 @@
                 ];
             } elseif ($user->isAdmin() || $user->isSuperAdmin()) {
                 $actions = [
-                    ['label' => 'مدیریت کاربران', 'icon' => 'users-edit', 'url' => route('super-admin.users.index')],
+                    ['label' => 'مدیریت کاربران', 'icon' => 'user-edit', 'url' => route('super-admin.users.index')],
                     ['label' => 'گزارشات انبار', 'icon' => 'file-analytics', 'url' => route('automation.inventory.reports.index')],
                     ['label' => 'لیست کالاها', 'icon' => 'box', 'url' => route('automation.inventory.index')],
                     ['label' => 'تنظیمات سیستم', 'icon' => 'settings', 'url' => route('admin.settings.index')],

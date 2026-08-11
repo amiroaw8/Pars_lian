@@ -20,7 +20,8 @@
 
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <!-- Tabs Header -->
-        <div class="flex border-b border-gray-200">
+        <div class="flex border-b border-gray-200 overflow-x-auto whitespace-nowrap">
+
             <button onclick="switchTab('print')" id="tab-print" class="px-6 py-4 text-sm font-medium text-blue-600 border-b-2 border-blue-600 focus:outline-none transition-colors duration-200">
                 <i class="ti ti-printer me-2"></i>تنظیمات چاپ
             </button>
@@ -65,6 +66,9 @@
                                         @break
                                     @case('print_invoice')
                                         فاکتور
+                                        @break
+                                    @case('print_thermal')
+                                        چاپ حرارتی
                                         @break
                                     @default
                                         {{ $group }}

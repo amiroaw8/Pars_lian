@@ -1,4 +1,4 @@
-<div class="mini-cart-panel">
+<div class="mini-cart-panel hidden sm:block">
 
     {{-- Header --}}
     <div class="mini-cart-header">

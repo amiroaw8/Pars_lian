@@ -48,7 +48,7 @@
                     </button>
                 </form>
                 @endif
-                <a href="{{ route($routePrefix . 'users.index') }}" class="btn-modern btn-modern-light py-2.5 px-5 text-slate-600 hover:bg-slate-100 transition-all">
+                <a href="{{ route($routePrefix . 'users.index') }}" class="btn-modern btn-modern-light py-2.5 px-5 text-white hover:bg-slate-100 transition-all">
                     <i class="ti ti-arrow-right"></i>
                     <span>بازگشت به لیست</span>
                 </a>

@@ -6,7 +6,10 @@
 <div class="max-w-2xl mx-auto px-4 py-12">
     <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden">
         <div class="bg-gray-900 px-8 py-6 text-white text-center">
-            <h1 class="text-2xl font-black">پیگیری وضعیت سفارش ( بدون نیاز به ورود )</h1>
+            <h1 class="text-2xl font-black flex flex-col gap-1">
+                <span>پیگیری سریع وضعیت سفارش</span>
+                <span class="text-base font-normal text-gray-400">(بدون نیاز به ورود)</span>
+            </h1>
 <hr class="my-4 border-gray-200">
 <p class="text-sm text-gray-300 mt-2">برای دیدن همه جزییات سفارشات از پنل کاربری خود پیگیری کنید.</p>
         </div>

@@ -20,8 +20,9 @@
     <meta name="apple-mobile-web-app-title" content="ParsLian">
 
     <!-- Fonts & Icons -->
-    <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}"></noscript>
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-Variable-font-face.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-Variable-font-face.css') }}"></noscript>
     @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 

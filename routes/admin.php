@@ -33,6 +33,7 @@ Route::prefix('panel')->name('admin.')->middleware([...$panelMiddleware, 'role:a
     Route::put('/settings/payment-gateways', [\App\Http\Controllers\SettingController::class, 'updatePaymentGateways'])->name('settings.update-payment-gateways');
     Route::post('/settings/licenses', [\App\Http\Controllers\SettingController::class, 'addLicense'])->name('settings.add-license');
     Route::delete('/settings/licenses/{index}', [\App\Http\Controllers\SettingController::class, 'removeLicense'])->name('settings.remove-license');
+    Route::put('/settings/public-pages', [\App\Http\Controllers\SettingController::class, 'updatePublicPages'])->name('settings.update-public-pages');
 
     // مدیریت سطوح دسترسی پیشرفته
     Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-logs.index');

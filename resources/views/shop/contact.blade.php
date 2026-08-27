@@ -19,7 +19,7 @@
                     <i class="ti ti-mail text-xl"></i>
                     <span class="font-bold">ایمیل</span>
                 </div>
-                <p class="text-gray-800 font-black">info@parslian.ir</p>
+                <p class="text-gray-800 font-black">info@plian.ir</p>
             </div>
             <div class="sm:col-span-2 p-6 rounded-2xl bg-gray-50 border border-gray-100">
                 <div class="flex items-center gap-3 text-red-500 mb-2">

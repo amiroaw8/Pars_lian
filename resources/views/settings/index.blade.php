@@ -2,6 +2,8 @@
 
 @section('title', 'تنظیمات سیستم - پارس لیان')
 
+
+
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-8">
@@ -42,6 +44,9 @@
                 <i class="ti ti-certificate me-2"></i>مجوزات سایت
             </button>
             @endif
+            <button onclick="switchTab('public-pages')" id="tab-public-pages" class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition-colors duration-200">
+                <i class="ti ti-file-text me-2"></i>محتوای عمومی
+            </button>
         </div>
 
         <!-- Tab Content: Print Settings -->
@@ -221,12 +226,73 @@
             @include('settings.partials.payment-gateways-tab')
         </div>
         @endif
+
+        {{-- تب محتوای عمومی: قوانین، سوالات متداول، حریم خصوصی --}}
+        <div id="content-public-pages" class="p-6 hidden">
+            <form action="{{ route('admin.settings.update-public-pages') }}" method="POST" class="space-y-10">
+                @csrf
+                @method('PUT')
+
+                @foreach([
+                    ['key' => 'terms',   'label' => 'قوانین و مقررات',  'icon' => 'ti-file-description', 'url' => '/terms'],
+                    ['key' => 'faq',     'label' => 'سوالات متداول',    'icon' => 'ti-help-circle',      'url' => '/faq'],
+                    ['key' => 'privacy', 'label' => 'حریم خصوصی',       'icon' => 'ti-shield-check',     'url' => '/privacy'],
+                ] as $page)
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <div class="bg-gray-50 px-6 py-4 flex items-center justify-between">
+                        <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
+                            <i class="ti {{ $page['icon'] }} text-blue-500"></i>
+                            {{ $page['label'] }}
+                        </h3>
+                        <a href="{{ $page['url'] }}" target="_blank" class="text-xs text-blue-500 hover:underline flex items-center gap-1">
+                            <i class="ti ti-external-link"></i> مشاهده صفحه
+                        </a>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        {{-- عنوان متا --}}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">عنوان متا (Meta Title)</label>
+                            <input type="text"
+                                   name="{{ $page['key'] }}_meta_title"
+                                   value="{{ old($page['key'].'_meta_title', \App\Models\Setting::get($page['key'].'_meta_title')) }}"
+                                   class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        {{-- توضیحات متا --}}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">توضیحات متا (Meta Description)</label>
+                            <input type="text"
+                                   name="{{ $page['key'] }}_meta_desc"
+                                   value="{{ old($page['key'].'_meta_desc', \App\Models\Setting::get($page['key'].'_meta_desc')) }}"
+                                   class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        {{-- محتوای اصلی — دریافت مستقیم کدهای HTML --}}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">محتوای صفحه (کد HTML مجاز است)</label>
+                            <textarea name="{{ $page['key'] }}_content"
+                                      rows="10"
+                                      class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
+                                      dir="ltr"
+                                      placeholder="<p>متن خود را اینجا بنویسید...</p>">{{ old($page['key'].'_content', \App\Models\Setting::get($page['key'].'_content')) }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <div class="flex justify-end">
+                    <button type="submit" class="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors flex items-center gap-2">
+                        <i class="ti ti-device-floppy"></i>
+                        ذخیره محتواها
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
+    // ---- تغییر تب ----
     function switchTab(tabName) {
-        ['print', 'sms', 'security', 'service', 'payment-gateways', 'licenses'].forEach(function(name) {
+        ['print', 'sms', 'security', 'service', 'payment-gateways', 'licenses', 'public-pages'].forEach(function(name) {
             const tab = document.getElementById('tab-' + name);
             const content = document.getElementById('content-' + name);
             if (!tab || !content) return;
@@ -245,3 +311,4 @@
     }
 </script>
 @endsection
+

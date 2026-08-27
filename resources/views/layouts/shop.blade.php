@@ -1305,6 +1305,18 @@
                             <i class="ti ti-chevron-left ml-2 text-xs opacity-60"></i>
                             فروشگاه
                         </a></li>
+                        <li><a href="{{ route('shop.terms') }}" class="text-gray-300 hover:text-white transition-colors hover:translate-x-2 inline-flex items-center transform duration-200">
+                            <i class="ti ti-chevron-left ml-2 text-xs opacity-60"></i>
+                            قوانین و مقررات
+                        </a></li>
+                        <li><a href="{{ route('shop.faq') }}" class="text-gray-300 hover:text-white transition-colors hover:translate-x-2 inline-flex items-center transform duration-200">
+                            <i class="ti ti-chevron-left ml-2 text-xs opacity-60"></i>
+                            سوالات متداول
+                        </a></li>
+                        <li><a href="{{ route('shop.privacy') }}" class="text-gray-300 hover:text-white transition-colors hover:translate-x-2 inline-flex items-center transform duration-200">
+                            <i class="ti ti-chevron-left ml-2 text-xs opacity-60"></i>
+                            حریم خصوصی
+                        </a></li>
                     </ul>
                 </div>
 
@@ -1335,7 +1347,7 @@
                         </div>
                         <div class="flex items-center text-gray-300 hover:text-white transition-colors">
                             <i class="ti ti-mail ml-3 text-blue-400"></i>
-                            <span>info@parslian.ir</span>
+                            <span>info@plian.ir</span>
                         </div>
                     </div>
                 </div>

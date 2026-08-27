@@ -9,12 +9,12 @@
       "@@context": "https://schema.org",
       "@@type": "Organization",
       "name": "فروشگاه پارس لیان",
-      "url": "https://amirwebtest1.ir",
-      "logo": "https://amirwebtest1.ir/logo.png",
-      "description": "فروشگاه تخصصی قطعات کامپیوتر و خدمات تعمیرات",
+      "url": "https://plian.ir",
+      "logo": "https://plian.ir/favicon.ico",
+      "description": "فروشگاه پارس لیان؛ مرکز خرید قطعات کامپیوتر، اسمبل سیستمهای گیمینگ و تعمیرات تخصصی سخت افزار در خرم آباد. تضمین قیمت، کیفیت و اصالت کالا.",
       "contactPoint": {
         "@@type": "ContactPoint",
-        "telephone": "+98-XXX-XXXXXXX",
+        "telephone": "06633308603",
         "contactType": "sales"
       },
       "sameAs": [
@@ -33,10 +33,8 @@
     <title>@yield('title', 'پارس لیان - سیستم مدیریت خدمات')</title>
 
     <!-- Fonts & Icons -->
-    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2') }}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn-Medium.woff2') }}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2') }}" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}">
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ asset('fonts/vazirmatn/Vazirmatn-Variable-font-face.css') }}">
     @include('partials.tabler-icons-assets')
 
     <!-- Critical CSS inline — prevents FOUC while app.css loads async -->

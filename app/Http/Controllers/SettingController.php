@@ -252,4 +252,28 @@ class SettingController extends Controller
 
         return Redirect::back()->with('success', 'تنظیمات درگاه‌های پرداخت با موفقیت بروزرسانی شد.');
     }
+
+    /**
+     * ذخیره محتوای صفحات عمومی (قوانین، سوالات متداول، حریم خصوصی)
+     */
+    public function updatePublicPages(Request $request)
+    {
+        $keys = [
+            'terms_meta_title', 'terms_meta_desc', 'terms_content',
+            'faq_meta_title',   'faq_meta_desc',   'faq_content',
+            'privacy_meta_title','privacy_meta_desc','privacy_content',
+        ];
+
+        foreach ($keys as $key) {
+            if ($request->has($key)) {
+                Setting::set($key, $request->input($key), [
+                    'group' => 'public_pages',
+                    'type'  => str_ends_with($key, '_content') ? 'textarea' : 'text',
+                ]);
+            }
+        }
+
+        return Redirect::back()->with('success', 'محتوای صفحات عمومی با موفقیت ذخیره شد.');
+    }
 }
+

@@ -7,7 +7,8 @@
     <title>@yield('title', 'پارس لیان - سیستم مدیریت خدمات')</title>
 
     <!-- Fonts & Icons -->
-    <link href="{{ asset('fonts/vazirmatn/Vazirmatn-font-face.css') }}" rel="stylesheet">
+    <link rel="preload" href="{{ asset('fonts/vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link href="{{ asset('fonts/vazirmatn/Vazirmatn-Variable-font-face.css') }}" rel="stylesheet">
     @include('partials.tabler-icons-assets')
     @vite(['resources/css/app.css', 'resources/css/partials/form-enhancements.css', 'resources/js/app.js'])
 

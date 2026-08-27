@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceOrderController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\SMSManagementController;
 use App\Http\Controllers\PaymentController;
@@ -83,6 +84,11 @@ Route::get('/', [ShopController::class, 'index'])->name('home');
 Route::get('/tracking', [ShopController::class, 'tracking'])->name('tracking.index');
 Route::get('/about', [ShopController::class, 'about'])->name('shop.about');
 Route::get('/contact', [ShopController::class, 'contact'])->name('shop.contact');
+
+// صفحات اعتمادسازی عمومی
+Route::get('/terms', [PublicPageController::class, 'terms'])->name('shop.terms');
+Route::get('/faq', [PublicPageController::class, 'faq'])->name('shop.faq');
+Route::get('/privacy', [PublicPageController::class, 'privacy'])->name('shop.privacy');
 
 // New Catalog and SEO Routes
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');

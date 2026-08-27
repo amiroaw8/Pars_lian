@@ -19,8 +19,8 @@ class SanitizeInput
 
         array_walk_recursive($input, function (&$item, $key) {
             if (is_string($item)) {
-                // Don't sanitize passwords or fields ending in _html
-                if (!in_array($key, ['password', 'password_confirmation']) && !str_ends_with($key, '_html')) {
+                // Don't sanitize passwords or fields ending in _html or _content
+                if (!in_array($key, ['password', 'password_confirmation']) && !str_ends_with($key, '_html') && !str_ends_with($key, '_content')) {
                     $item = strip_tags($item);
                     $item = trim($item);
                 }

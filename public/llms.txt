@@ -1,10 +1,19 @@
-# llms.txt for amirwebtest1.ir
+# llms.txt for plian.ir
 
 فروشگاه پارس لیان - قطعات کامپیوتر و تعمیرات
 
 ## صفحات اصلی
-- [درباره ما](https://amirwebtest1.ir/about)
-- [فروشگاه](https://amirwebtest1.ir/shop)
+- [درباره ما](https://plian.ir/about)
+- [فروشگاه](https://plian.ir/shop)
+- [پیگیری سریع سفارشات](https://plian.ir/tracking)
+- [همه محصولات فروشگاه](https://plian.ir/catalog)
+- [سبد خرید](https://plian.ir/cart)
+- [صفحه ثبت نام](https://plian.ir/register)
+- [صفحه ورود](https://plian.ir/login)
+- [صفحه تماس با ما](https://plian.ir/contact)
+- [صفحه حریم خصوصی](https://plian.ir/privacy)
+- [صفحه قوانین و مقررات](https://plian.ir/terms)
+- [صفحه سوالات متداول](https://plian.ir/faq)
 
 ## اطلاعات تماس
-- ایمیل: [info@parslian.ir](mailto:info@parslian.ir)
+- ایمیل: [info@plian.ir](mailto:info@palian.ir)

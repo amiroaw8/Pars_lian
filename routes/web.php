@@ -109,10 +109,14 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::post('/add/{product:slug}', [CartController::class, 'add'])->name('add');
     Route::patch('/update/{product:slug}', [CartController::class, 'update'])->name('update');
     Route::delete('/remove/{product:slug}', [CartController::class, 'remove'])->name('remove');
+    Route::get('/remove/{product?}', fn () => redirect()->route('cart.index'));
     Route::delete('/clear', [CartController::class, 'clear'])->name('clear');
     Route::get('/count', [CartController::class, 'count'])->name('count');
     Route::get('/mini-cart', [CartController::class, 'miniCart'])->name('mini');
 });
+
+// Dynamic Sitemap XML
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 // Checkout Routes
 Route::middleware(['auth', 'session.limit', 'security.headers', 'throttle:checkout'])->group(function () {

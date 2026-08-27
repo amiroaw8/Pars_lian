@@ -3,7 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" id="viewport-meta">
-    <link rel="canonical" href="{{ url()->current() }}" />
+    @hasSection('canonical')
+        <link rel="canonical" href="@yield('canonical')" />
+    @elseif(request()->boolean('on_sale'))
+        <link rel="canonical" href="{{ request()->fullUrl() }}" />
+    @else
+        <link rel="canonical" href="{{ url()->current() }}" />
+    @endif
+    @hasSection('robots')
+        <meta name="robots" content="@yield('robots')">
+    @elseif(View::hasSection('meta_robots'))
+        @yield('meta_robots')
+    @endif
     <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
@@ -25,8 +36,8 @@
     </script>
     @stack('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="فروشگاه پارس لیان با ارائه قطعات اورجینال کامپیوتر، خدمات تعمیرات تخصصی و پشتیبانی حرفه‌ای، بهترین انتخاب برای خرید مطمئن و سریع شماست.">
-    <meta property="og:description" content="فروشگاه پارس لیان با ارائه قطعات اورجینال کامپیوتر، خدمات تعمیرات تخصصی و پشتیبانی حرفه‌ای، بهترین انتخاب برای خرید مطمئن و سریع شماست.">
+    <meta name="description" content="@yield('meta_description', 'فروشگاه پارس لیان با ارائه قطعات اورجینال کامپیوتر، خدمات تعمیرات تخصصی و پشتیبانی حرفه‌ای، بهترین انتخاب برای خرید مطمئن و سریع شماست.')">
+    <meta property="og:description" content="@yield('meta_description', 'فروشگاه پارس لیان با ارائه قطعات اورجینال کامپیوتر، خدمات تعمیرات تخصصی و پشتیبانی حرفه‌ای، بهترین انتخاب برای خرید مطمئن و سریع شماست.')">
     @auth
     <meta name="money-words-url" content="{{ route('automation.money.words') }}">
     @endauth

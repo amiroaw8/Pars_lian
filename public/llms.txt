@@ -1,19 +1,18 @@
 # llms.txt for plian.ir
 
-فروشگاه پارس لیان - قطعات کامپیوتر و تعمیرات
+فروشگاه پارس لیان - قطعات کامپیوتر، اسمبل سیستم‌های گیمینگ و تعمیرات تخصصی سخت‌افزار
 
 ## صفحات اصلی
-- [درباره ما](https://plian.ir/about)
 - [فروشگاه](https://plian.ir/shop)
-- [پیگیری سریع سفارشات](https://plian.ir/tracking)
-- [همه محصولات فروشگاه](https://plian.ir/catalog)
-- [سبد خرید](https://plian.ir/cart)
-- [صفحه ثبت نام](https://plian.ir/register)
-- [صفحه ورود](https://plian.ir/login)
+- [همه محصولات فروشگاه (کاتالوگ)](https://plian.ir/catalog)
+- [محصولات تخفیف‌دار و پیشنهادات ویژه](https://plian.ir/catalog?on_sale=1)
+- [درباره ما](https://plian.ir/about)
 - [صفحه تماس با ما](https://plian.ir/contact)
-- [صفحه حریم خصوصی](https://plian.ir/privacy)
-- [صفحه قوانین و مقررات](https://plian.ir/terms)
+- [پیگیری سریع سفارشات و تعمیرات](https://plian.ir/tracking)
 - [صفحه سوالات متداول](https://plian.ir/faq)
+- [صفحه قوانین و مقررات](https://plian.ir/terms)
+- [صفحه حریم خصوصی](https://plian.ir/privacy)
 
 ## اطلاعات تماس
-- ایمیل: [info@plian.ir](mailto:info@palian.ir)
+- ایمیل: [info@plian.ir](mailto:info@plian.ir)
+- تلفن: 06633308603

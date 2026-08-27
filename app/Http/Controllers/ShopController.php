@@ -109,22 +109,15 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->get('q', '');
+        $rawQuery = $request->get('q', '');
+        $query = is_string($rawQuery) ? trim($rawQuery) : '';
 
-        if (empty($query)) {
-            return to_route('shop.index');
+        // If query is empty, only spaces, or matches unparsed JS template string like ${s}
+        if ($query === '' || preg_match('/^\$\{[a-zA-Z0-9_]*\}$/', $query)) {
+            return redirect()->route('shop.index');
         }
 
-        $products = Product::active()
-            ->inStock()
-            ->where(function ($q) use ($query) {
-                $q->where('name', 'like', "%{$query}%")
-                    ->orWhere('description', 'like', "%{$query}%")
-                    ->orWhere('sku', 'like', "%{$query}%");
-            })
-            ->paginate(12);
-
-        return view('shop.search', compact('products', 'query'));
+        return redirect()->route('catalog.index', ['q' => $query]);
     }
 
     public function tracking(Request $request)

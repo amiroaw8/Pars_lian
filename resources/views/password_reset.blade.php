@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'تغییر رمز عبور')
+@section('robots', 'noindex, follow')
 
 @section('content')
 <div class="max-w-md mx-auto py-12">

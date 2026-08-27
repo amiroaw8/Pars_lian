@@ -1,6 +1,14 @@
 @extends('layouts.shop')
 
-@section('title', 'همه محصولات - پارس لیان')
+@if(request()->boolean('on_sale'))
+    @section('title', 'محصولات تخفیف‌دار و حراجی - پارس لیان')
+    @section('meta_description', 'مشاهده و خرید آنلاین انواع قطعات کامپیوتر، لپ‌تاپ و تجهیزات سخت‌افزار با تخفیف ویژه و قیمت استثنایی در فروشگاه پارس لیان.')
+    @section('canonical', request()->fullUrl())
+@else
+    @section('title', 'کاتالوگ و همه محصولات - پارس لیان')
+    @section('meta_description', 'کاتالوگ و لیست کامل کلیه قطعات کامپیوتر، لپ‌تاپ و تجهیزات الکترونیک با بهترین قیمت و گارانتی معتبر در فروشگاه پارس لیان.')
+    @section('canonical', route('catalog.index'))
+@endif
 
 @section('shop-content')
 <style>

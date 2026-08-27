@@ -2272,7 +2272,7 @@ if (searchInput) {
             ];
             
             suggestionsList.innerHTML = suggestions.map(s => `
-                <a href="/shop/search?q=${s}" class="block px-6 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                <a href="/catalog?q=${encodeURIComponent(query)}" class="block px-6 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
                     <i class="ti ti-search ml-3 text-gray-300"></i>
                     ${s}
                 </a>

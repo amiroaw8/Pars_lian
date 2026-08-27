@@ -1,6 +1,8 @@
 @extends('layouts.shop')
 
-@section('title', 'درباره ما - پارس لیان')
+@section('title', 'درباره ما - فروشگاه و خدمات تخصصی پارس لیان')
+@section('meta_description', 'آشنایی با تاریخچه بیش از ۲۵ ساله فروشگاه و مرکز تعمیرات تخصصی سخت‌افزار پارس لیان، خدمات اعزام کارشناس در استان لرستان و فروش سراسری قطعات کامپیوتر.')
+@section('canonical', route('shop.about'))
 
 @section('shop-content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

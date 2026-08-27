@@ -1,6 +1,7 @@
 @extends('layouts.shop')
 
 @section('title', 'سبد خرید - پارس لیان')
+@section('robots', 'noindex, follow')
 
 @section('shop-content')
 <div class="py-12 bg-gray-50 min-h-screen" dir="rtl">

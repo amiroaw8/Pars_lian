@@ -1,6 +1,7 @@
 @extends('layouts.shop')
 
 @section('title', 'ثبت موفق سفارش - پارس لیان')
+@section('robots', 'noindex, follow')
 
 @section('shop-content')
 <div class="py-20 bg-gray-50 min-h-screen flex items-center justify-center" dir="rtl">
